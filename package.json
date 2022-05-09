@@ -1,0 +1,15 @@
+{
+  "name": "learning-notes",
+  "version": "1.0.0",
+  "description": "to record what i learned before",
+  "main": "index.js",
+  "author": "chenyue <285653184@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "vuepress": "^2.0.0-beta.43"
+  }
+}
