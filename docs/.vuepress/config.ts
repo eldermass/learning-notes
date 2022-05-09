@@ -1,11 +1,12 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 
 export default defineUserConfig({
+    head: [['link', { rel: 'icon', href: '/images/eight.png' }]],
     lang: 'zh-CN',
     title: 'Morning',
     description: '这是我的第一个 VuePress 站点',
     theme: defaultTheme({
-        ogo: '/images/logo.png', // 注意图片放在 public 文件夹下
+        logo: '/images/eight.png', // 注意图片放在 public 文件夹下
         navbar: [
             {
                 // 右上导航航条 docs/.vuepress/README.md
