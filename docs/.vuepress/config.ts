@@ -1,6 +1,7 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 
 export default defineUserConfig({
+    base: '/learning-notes/',
     lang: 'zh-CN',
     title: 'Morning',
     description: '这是我的第一个 VuePress 站点',
