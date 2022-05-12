@@ -21,13 +21,6 @@ export default defineUserConfig({
                 ],
             },
             {
-                text: 'Typescript 学习笔记',
-                children: [
-                    { text: '笔记', link: '/guide/ts/' }, // 以 ‘/’结束，默认读取 README.md
-                    { text: '其它链接', link: 'https://www.baidu.com/' }, // 外部链接
-                ],
-            },
-            {
                 text: '其它参考',
                 children: [
                     { text: 'API', link: 'https://cn.bing.com/' },
@@ -37,37 +30,65 @@ export default defineUserConfig({
                             { text: '慕客', link: 'https://cn.bing.com/' },
                             { text: 'B 站', link: 'https://cn.bing.com/' },
                         ],
-                    },
-                    {
-                        text: '开源项目',
-                        children: [
-                            { text: '项目 01', link: 'https://cn.bing.com/' },
-                            { text: '项目 02', link: 'https://cn.bing.com/' },
-                            { text: '项目 03', link: 'https://cn.bing.com/' },
-                            { text: '项目 04', link: 'https://cn.bing.com/' },
-                        ],
-                    },
+                    }
                 ],
             },
         ],
         sidebar: [
-            // SidebarItem
             {
-                text: 'Foo',
-                link: '/foo/',
+                collapsible: true,
+                text: 'JavaScript',
+                link: '/JavaScript/常用的js函数.md',
                 children: [
-                    // SidebarItem
-                    {
-                        text: 'github',
-                        link: 'https://github.com',
-                        children: [],
-                    },
-                    // 字符串 - 页面文件路径
-                    '/foo/bar.md',
+                    '/JavaScript/常用的js函数.md',
+                    '/JavaScript/关于js继承.md',
+                    '/JavaScript/模拟bind实现.md',
+                    '/JavaScript/深浅拷贝.md',
+                    '/JavaScript/文件路劲映射.md',
+                    '/JavaScript/canvas验证码.md',
+                    '/JavaScript/ES6里MapSet数据结构.md',
+                    '/JavaScript/ES6中的类.md',
+                    '/JavaScript/ES6中的正则表达式.md',
+                    '/JavaScript/es6中关于数组的部分函数.md',
+                    '/JavaScript/ES6中异步处理方法.md',
+                    '/JavaScript/Promise模拟实现.md',
+                    '/JavaScript/proxy.md',
+                ]
+            },
+            {
+                collapsible: true,
+                text: '协议',
+                link: '/协议/OAUTH2.md',
+                children: [
+                    '/协议/OAUTH2.md'
                 ],
             },
-            // 字符串 - 页面文件路径
-            '/bar/README.md',
+            {
+                collapsible: true,
+                text: '规范',
+                link: '/规范/RESTFULAPI.md',
+                children: [
+                    '/规范/RESTFULAPI.md'
+                ]
+            },
+            {
+                collapsible: true,
+                text: '计算机基础',
+                link: '/计算机基础/位运算.md',
+                children: [
+                    '/计算机基础/位运算.md',
+                    '/计算机基础/base64原理.md',
+                    '/计算机基础/internet五层协议.md'
+                ]
+            },
+            {
+                collapsible: true,
+                text: '服务器',
+                link: '/服务器/linux安装imagemagick.md',
+                children: [
+                    '/服务器/linux安装imagemagick.md'
+                ]
+            }
         ],
     }),
 })
