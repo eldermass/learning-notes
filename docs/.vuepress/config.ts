@@ -4,7 +4,7 @@ export default defineUserConfig({
     head: [['link', { rel: 'icon', href: '/images/eight.png' }]],
     lang: 'zh-CN',
     title: 'Morning',
-    description: '这是我的第一个 VuePress 站点',
+    description: '学习技术时瞎记的笔记',
     theme: defaultTheme({
         logo: '/images/eight.png', // 注意图片放在 public 文件夹下
         navbar: [
@@ -35,6 +35,27 @@ export default defineUserConfig({
             },
         ],
         sidebar: [
+            {
+                collapsible: true,
+                text: '工具',
+                link: '/工具/Git常用命令.md',
+                children: [
+                    '/工具/Git常用命令.md',
+                    '/工具/Nginx 配置.md',
+                    '/工具/docker 命令.md'
+                ]
+            },
+            {
+                collapsible: true,
+                text: '服务器',
+                link: '/服务器/linux 命令.md',
+                children: [
+                    '/服务器/linux 命令.md',
+                    '/服务器/shell编程.md',
+                    '/服务器/vim 使用.md',
+                    '/服务器/linux安装imagemagick.md'
+                ]
+            },
             {
                 collapsible: true,
                 text: 'JavaScript',
@@ -79,14 +100,6 @@ export default defineUserConfig({
                     '/计算机基础/位运算.md',
                     '/计算机基础/base64原理.md',
                     '/计算机基础/internet五层协议.md'
-                ]
-            },
-            {
-                collapsible: true,
-                text: '服务器',
-                link: '/服务器/linux安装imagemagick.md',
-                children: [
-                    '/服务器/linux安装imagemagick.md'
                 ]
             }
         ],
