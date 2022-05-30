@@ -209,7 +209,7 @@ git revert -n 版本          重做分支
 
 ### 子模块
 
-> 带有子模块的项目在根目录下会有.gitsubmodule 文件，记录着各个子模块的信息, 例如
+> 带有子模块的项目在根目录下会有.gitsubmodule 文件，记录着各个子模块的信息。文件示例
 
 ```bash
 [submodule "houduan"]
@@ -218,21 +218,46 @@ git revert -n 版本          重做分支
     branch = master
 ```
 
+[官方文档](http://git-scm.com/docs/git-submodule)  
 [submoudle 使用](http://blog.jqian.net/post/git-submodule.html)
 
-```bash
-# 新增子模块
-git submodule add <git@repo> <local path>
+#### 新增
 
-# 克隆，主项目并不会自动拉取子项目，需要手动拉取
+该命令实际会做三件事情：首先，clone lib.git 到本地；然后，创建一个 .gitsubmodule 文件标记 submodule 的具体信息；同时，更新.git/config 文件，增加 submodule 的地址
+
+```bash
+# 新增子模块，local path 是放子项目的目录
+git submodule add <git@repo> <local path>
+```
+
+#### 克隆
+
+克隆，主项目并不会自动拉取子项目，需要手动拉取
+
+```bash
 git submodule init
 git submodule update
 # 或使用组合命令
 git submodule update --init --recursive
+```
 
+#### 更新/修改
+
+可能稍微违反直觉的是，如果 submodule 有更新，默认在本地父项目里执行 git pull 是不会更新 submodule 的。因为执行 git submodule add xxx 的时候，只是把 submodule 的当前 commit id 加入到本地父项目的索引里，如果你期望 submodule 的 commit id 同步到最新 HEAD，则你还需要重新执行 git add 然后重新提交。
+
+此后，其他开发成员需要执行 git submodule update 更新你刚才的这个 submodule commit。这里一个需要注意的地方是，每次在父项目执行 git pull 后，应该执行 git status 查看一下 submodule 是否有更新；如果 submodule 有更新，则应该立刻执行 git submodule update，否则你有可能把 submodule 的旧依赖提交到仓库里去。一个建议是，尽量不要执行 git commit -a，它会让你忽略对 staged 文件的确认过程。
+
+```bash
 # foreach可以管理多个子分支
 git submodule foreach 'git checkout -b <branch_name>'
+```
 
+#### 删除
+
+首先，需要删除 .git/config 和 .gitsubmodle 文件里 submodule 相关的部分，然后执行以下命令
+
+```bash
+git rm --cached <local path>
 ```
 
 ### .gitignore 文件

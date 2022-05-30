@@ -72,8 +72,11 @@ export default defineUserConfig({
                     '/JavaScript/ES6中的正则表达式.md',
                     '/JavaScript/es6中关于数组的部分函数.md',
                     '/JavaScript/ES6中异步处理方法.md',
-                    '/JavaScript/Promise模拟实现.md',
                     '/JavaScript/proxy.md',
+                    '/JavaScript/工厂模式.md',
+                    '/JavaScript/观察者模式.md',
+                    '/JavaScript/订阅模式.md',
+                    '/JavaScript/正则表达式.md',
                 ]
             },
             {
@@ -89,7 +92,8 @@ export default defineUserConfig({
                 text: '规范',
                 link: '/规范/RESTFULAPI.md',
                 children: [
-                    '/规范/RESTFULAPI.md'
+                    '/规范/RESTFULAPI.md',
+                    '/规范/PromiseA+.md'
                 ]
             },
             {
@@ -100,6 +104,14 @@ export default defineUserConfig({
                     '/计算机基础/位运算.md',
                     '/计算机基础/base64原理.md',
                     '/计算机基础/internet五层协议.md'
+                ]
+            },
+            {
+                collapsible: true,
+                text: '机器学习',
+                link: '/机器学习/人工智障.md',
+                children: [
+                    '/机器学习/人工智障.md',
                 ]
             }
         ],
