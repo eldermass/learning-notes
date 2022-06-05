@@ -53,7 +53,8 @@ export default defineUserConfig({
                     '/服务器/linux 命令.md',
                     '/服务器/shell编程.md',
                     '/服务器/vim 使用.md',
-                    '/服务器/linux安装imagemagick.md'
+                    '/服务器/linux安装imagemagick.md',
+                    '/服务器/k8s使用.md'
                 ]
             },
             {
