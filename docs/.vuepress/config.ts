@@ -14,25 +14,25 @@ export default defineUserConfig({
                 link: '/',
             },
             {
-                text: 'Vue 学习笔记',
+                text: '学习网站',
                 children: [
-                    { text: '笔记', link: '/guide/vue/test01.md' }, // 可不写后缀 .md
-                    { text: '其它链接', link: 'https://www.baidu.com/' }, // 外部链接
+                    { text: 'Github', link: 'https://github.com' }, // 可不写后缀 .md
+                    { text: '掘金', link: 'https://juejin.cn/' }, // 外部链接
                 ],
             },
-            {
-                text: '其它参考',
-                children: [
-                    { text: 'API', link: 'https://cn.bing.com/' },
-                    {
-                        text: '学习视频',
-                        children: [
-                            { text: '慕客', link: 'https://cn.bing.com/' },
-                            { text: 'B 站', link: 'https://cn.bing.com/' },
-                        ],
-                    }
-                ],
-            },
+            // {
+            //     text: '其它参考',
+            //     children: [
+            //         { text: 'API', link: 'https://cn.bing.com/' },
+            //         {
+            //             text: '学习视频',
+            //             children: [
+            //                 { text: '慕客', link: 'https://cn.bing.com/' },
+            //                 { text: 'B 站', link: 'https://cn.bing.com/' },
+            //             ],
+            //         }
+            //     ],
+            // },
         ],
         sidebar: [
             {
@@ -55,29 +55,6 @@ export default defineUserConfig({
                     '/服务器/vim 使用.md',
                     '/服务器/linux安装imagemagick.md',
                     '/服务器/k8s使用.md'
-                ]
-            },
-            {
-                collapsible: true,
-                text: 'JavaScript',
-                link: '/JavaScript/常用的js函数.md',
-                children: [
-                    '/JavaScript/常用的js函数.md',
-                    '/JavaScript/关于js继承.md',
-                    '/JavaScript/模拟bind实现.md',
-                    '/JavaScript/深浅拷贝.md',
-                    '/JavaScript/文件路劲映射.md',
-                    '/JavaScript/canvas验证码.md',
-                    '/JavaScript/ES6里MapSet数据结构.md',
-                    '/JavaScript/ES6中的类.md',
-                    '/JavaScript/ES6中的正则表达式.md',
-                    '/JavaScript/es6中关于数组的部分函数.md',
-                    '/JavaScript/ES6中异步处理方法.md',
-                    '/JavaScript/proxy.md',
-                    '/JavaScript/工厂模式.md',
-                    '/JavaScript/观察者模式.md',
-                    '/JavaScript/订阅模式.md',
-                    '/JavaScript/正则表达式.md',
                 ]
             },
             {
@@ -113,6 +90,57 @@ export default defineUserConfig({
                 link: '/机器学习/人工智障.md',
                 children: [
                     '/机器学习/人工智障.md',
+                ]
+            },
+            {
+                collapsible: true,
+                text: 'JavaScript',
+                link: '/JavaScript/常用的js函数.md',
+                children: [
+                    '/JavaScript/常用的js函数.md',
+                    '/JavaScript/关于js继承.md',
+                    '/JavaScript/模拟bind实现.md',
+                    '/JavaScript/深浅拷贝.md',
+                    '/JavaScript/文件路劲映射.md',
+                    '/JavaScript/canvas验证码.md',
+                    '/JavaScript/ES6里MapSet数据结构.md',
+                    '/JavaScript/ES6中的类.md',
+                    '/JavaScript/ES6中的正则表达式.md',
+                    '/JavaScript/es6中关于数组的部分函数.md',
+                    '/JavaScript/ES6中异步处理方法.md',
+                    '/JavaScript/proxy.md',
+                    '/JavaScript/工厂模式.md',
+                    '/JavaScript/观察者模式.md',
+                    '/JavaScript/订阅模式.md',
+                    '/JavaScript/正则表达式.md',
+                ]
+            },
+            {
+                collapsible: true,
+                text: 'Node',
+                link: '/node/Koa 解析.md',
+                children: [
+                    '/node/Koa 解析.md',
+                    '/node/socket.md',
+                ]
+            },
+            {
+                collapsible: true,
+                text: 'PHP',
+                link: '/php/laravel入门.md',
+                children: [
+                    '/php/laravel入门.md',
+                    '/php/laravel续.md'
+                ]
+            },
+            {
+                collapsible: true,
+                text: 'Python',
+                link: '/python/python基础.md',
+                children: [
+                    '/python/python基础.md',
+                    '/python/python入门.md',
+                    '/python/python爬虫.md',
                 ]
             }
         ],

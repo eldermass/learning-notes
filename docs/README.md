@@ -1,6 +1,4 @@
-# Hello VuePress
-
-[GitHub](https://github.com)
+# 主页
 
 转移中...  
 Tengine
