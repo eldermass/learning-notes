@@ -17,8 +17,8 @@
 
 `API` 的根入口点应尽可能保持足够简单，这里有两个常见的 `URL` 根例子：
 
--   api.example.com/\*
--   example.com/api/\*
+- api.example.com/\*
+- example.com/api/\*
 
 ## 版本
 
@@ -38,9 +38,9 @@ Accept: application/vnd.example.com.v1+json
 
 其中 `vnd` 表示 `Standards Tree` 标准树类型，有三个不同的树: `x`，`prs` 和 `vnd`。你使用的标准树需要取决于你开发的项目
 
--   未注册的树（`x`）主要表示本地和私有环境
--   私有树（`prs`）主要表示没有商业发布的项目
--   供应商树（`vnd`）主要表示公开发布的项目
+- 未注册的树（`x`）主要表示本地和私有环境
+- 私有树（`prs`）主要表示没有商业发布的项目
+- 供应商树（`vnd`）主要表示公开发布的项目
 
 后面几个参数依次为应用名称（一般为应用域名）、版本号、期望的返回格式。
 
@@ -48,11 +48,11 @@ Accept: application/vnd.example.com.v1+json
 
 端点就是指向特定资源或资源集合的 `URL`。在端点的设计中，你 `必须` 遵守下列约定：
 
--   URL 的命名 `必须` 全部小写
--   URL 中资源（`resource`）的命名 `必须` 是名词，并且 `必须` 是复数形式
--   `必须` 优先使用 `Restful` 类型的 URL
--   URL `必须` 是易读的
--   URL `一定不可` 暴露服务器架构
+- URL 的命名 `必须` 全部小写
+- URL 中资源（`resource`）的命名 `必须` 是名词，并且 `必须` 是复数形式
+- `必须` 优先使用 `Restful` 类型的 URL
+- URL `必须` 是易读的
+- URL `一定不可` 暴露服务器架构
 
 > 至于 URL 是否必须使用连字符（`-`） 或下划线（`_`），不做硬性规定，但 `必须` 根据团队情况统一一种风格。
 
@@ -70,21 +70,21 @@ https://api.example.com/employees
 
 对于资源的具体操作类型，由 `HTTP` 动词表示。常用的 `HTTP` 动词有下面五个（括号里是对应的 `SQL` 命令）。
 
--   GET（SELECT）：从服务器取出资源（一项或多项）。
--   POST（CREATE）：在服务器新建一个资源。
--   PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。
--   PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。
--   DELETE（DELETE）：从服务器删除资源。
+- GET（SELECT）：从服务器取出资源（一项或多项）。
+- POST（CREATE）：在服务器新建一个资源。
+- PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。替换
+- PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。修改
+- DELETE（DELETE）：从服务器删除资源。
 
 ## 筛选
 
 > 如果记录数量很多，服务器不可能都将它们返回给用户。API `应该` 提供参数，过滤返回结果。下面是一些常见的参数。
 
--   ?limit=10：指定返回记录的数量
--   ?offset=10：指定返回记录的开始位置。
--   ?page=2&per_page=100：指定第几页，以及每页的记录数。
--   ?sortby=name&order=asc：指定返回结果按照哪个属性排序，以及排序顺序。
--   ?animal_type_id=1：指定筛选条件
+- ?limit=10：指定返回记录的数量
+- ?offset=10：指定返回记录的开始位置。
+- ?page=2&per_page=100：指定第几页，以及每页的记录数。
+- ?sortby=name&order=asc：指定返回结果按照哪个属性排序，以及排序顺序。
+- ?animal_type_id=1：指定筛选条件
 
 ## 认证
 
@@ -92,12 +92,12 @@ https://api.example.com/employees
 
 Oauth 的端点设计示列
 
--   RFC 6749 /token
--   Twitter /oauth2/token
--   Fackbook /oauth/access_token
--   Google /o/oauth2/token
--   Github /login/oauth/access_token
--   Instagram /oauth/authorize
+- RFC 6749 /token
+- Twitter /oauth2/token
+- Fackbook /oauth/access_token
+- Google /o/oauth2/token
+- Github /login/oauth/access_token
+- Instagram /oauth/authorize
 
 客户端在获得 `access token` 的同时 `必须` 在响应中包含一个名为 `expires_in` 的数据，它表示当前获得的 `token` 会在多少 `秒` 后失效。例如：
 

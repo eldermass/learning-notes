@@ -1,7 +1,5 @@
 # python 入门
 
-[w3c 教程](https://www.w3cschool.cn/python3)
-
 ## 数据类型
 
 ### 运算符

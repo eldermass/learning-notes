@@ -141,6 +141,17 @@ export default defineUserConfig({
                     '/python/python基础.md',
                     '/python/python入门.md',
                     '/python/python爬虫.md',
+                    '/python/Flask入门.md',
+                ]
+            },
+            {
+                collapsible: true,
+                text: '数据库',
+                link: '/数据库/redis入门.md',
+                children: [
+                    '/数据库/redis入门.md',
+                    '/数据库/mysql入门.md',
+                    '/数据库/mongoDB入门.md'
                 ]
             }
         ],

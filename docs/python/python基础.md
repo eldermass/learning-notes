@@ -2,10 +2,11 @@
 
 [常用系统模块](https://learnku.com/docs/pymotw/string-string-constants-and-templates/3360)
 
-## 1. 常识
+## 基础
+
+指定脚本运行程序，和字符编码
 
 ```bash
-指定脚本运行程序，和字符编码
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 ```
@@ -23,12 +24,11 @@ class Test:
         return a + b
 ```
 
-### 扩展类型
+扩展类型
 
 ```python
 # 枚举类型
 enum
-
 ```
 
 ### 迭代器和生成器
@@ -47,8 +47,9 @@ while True:
         sys.exit()
 ```
 
+在 Python 中，使用了 yield 的函数被称为生成器（generator）。
+
 ```python
-# 在 Python 中，使用了 yield 的函数被称为生成器（generator）。
 import sys
 
 def fibonacci(n): # 生成器函数 - 斐波那契
@@ -179,7 +180,7 @@ for x in range(1, 11):
 
 ```
 
-## 2. 系统模块
+## 系统模块
 
 ### re 模块
 
