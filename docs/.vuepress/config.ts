@@ -142,6 +142,7 @@ export default defineUserConfig({
                     '/python/python入门.md',
                     '/python/python爬虫.md',
                     '/python/Flask入门.md',
+                    '/python/Masonite入门.md',
                 ]
             },
             {
