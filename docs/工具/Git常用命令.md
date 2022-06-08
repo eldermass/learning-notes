@@ -7,7 +7,7 @@
 ```bash
     git --version    查看安装的版本
     git init         初始化
-    git config --global user.name 'chenyue'
+    git config --global user.name 'cherry'
     git config --global user.email '285653184@qq.com'
 
     git status  获取队列状态

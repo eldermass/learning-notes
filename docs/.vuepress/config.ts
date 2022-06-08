@@ -1,12 +1,16 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 const { googleAnalyticsPlugin } = require('@vuepress/plugin-google-analytics')
+const { docsearchPlugin } = require('@vuepress/plugin-docsearch')
 
 export default defineUserConfig({
     head: [['link', { rel: 'icon', href: '/images/eight.png' }]],
     lang: 'zh-CN',
     title: 'Morning',
     description: '学习技术时瞎记的笔记',
-    plugins: [googleAnalyticsPlugin({ id: 'G-JML3S15FQR' })],
+    plugins: [
+        googleAnalyticsPlugin({ id: 'G-JML3S15FQR' }),
+        docsearchPlugin()
+    ],
     theme: defaultTheme({
         logo: '/images/eight.png', // 注意图片放在 public 文件夹下
         navbar: [
