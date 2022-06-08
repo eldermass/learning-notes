@@ -9,7 +9,11 @@ export default defineUserConfig({
     description: '学习技术时瞎记的笔记',
     plugins: [
         googleAnalyticsPlugin({ id: 'G-JML3S15FQR' }),
-        docsearchPlugin()
+        docsearchPlugin({
+            appId: 'EXAI0D5URC',
+            apiKey: '8c4b18b3f8915f34d7e7325d68b864f9',
+            indexName: 'learning_notes'
+        })
     ],
     theme: defaultTheme({
         logo: '/images/eight.png', // 注意图片放在 public 文件夹下
