@@ -10,9 +10,9 @@ export default defineUserConfig({
     plugins: [
         googleAnalyticsPlugin({ id: 'G-JML3S15FQR' }),
         docsearchPlugin({
-            appId: 'EXAI0D5URC',
-            apiKey: '8c4b18b3f8915f34d7e7325d68b864f9',
-            indexName: 'learning_notes'
+            appId: '98YPRTASUE',
+            apiKey: '24fa0068411f1e40ac63b9e9f349a9e5',
+            indexName: 'netlify_88218300-5aaf-4075-a2ed-3949ec6439e6_master_all'
         })
     ],
     theme: defaultTheme({
