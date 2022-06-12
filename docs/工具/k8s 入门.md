@@ -1,4 +1,4 @@
-# K8s 使用
+# K8s 入门
 
 [教程](https://juejin.cn/post/6952331691524358174)  
 [官方文档](https://kubernetes.io/zh/docs/tutorials/kubernetes-basics/create-cluster/cluster-intro/)

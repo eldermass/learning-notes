@@ -28,6 +28,7 @@ export default defineUserConfig({
                 children: [
                     { text: 'Github', link: 'https://github.com' }, // 可不写后缀 .md
                     { text: '掘金', link: 'https://juejin.cn/' }, // 外部链接
+                    { text: '前端部署', link: 'https://q.shanyue.tech/deploy/'}
                 ],
             },
             // {
@@ -52,7 +53,8 @@ export default defineUserConfig({
                 children: [
                     '/工具/Git常用命令.md',
                     '/工具/Nginx 配置.md',
-                    '/工具/docker 命令.md'
+                    '/工具/docker 命令.md',
+                    '/工具/终端命令.md',
                 ]
             },
             {
@@ -64,7 +66,6 @@ export default defineUserConfig({
                     '/服务器/shell编程.md',
                     '/服务器/vim 使用.md',
                     '/服务器/linux安装imagemagick.md',
-                    '/服务器/k8s使用.md'
                 ]
             },
             {
