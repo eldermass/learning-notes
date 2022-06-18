@@ -1,19 +1,8 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 const { googleAnalyticsPlugin } = require('@vuepress/plugin-google-analytics')
 const { docsearchPlugin } = require('@vuepress/plugin-docsearch')
-import { webpackBundler } from "@vuepress/bundler-webpack"
 
 export default defineUserConfig({
-    bundler: webpackBundler({
-        configureWebpack: (config) => {
-            // config.output.publicPath = "//learning-notes.oss-cn-chengdu.aliyuncs.com/"
-            return {
-                output: {
-                    publicPath: "//learning-notes.oss-cn-chengdu.aliyuncs.com/"
-                }
-            }
-        }
-    }),
     head: [['link', { rel: 'icon', href: '/images/eight.png' }]],
     lang: 'zh-CN',
     title: 'Morning',
