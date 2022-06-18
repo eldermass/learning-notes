@@ -11,6 +11,5 @@ export default defineUserConfig(Object.assign({}, userConfig, {
                 }
             }
         }
-    }),
-    base: '/learning-notes/'
+    })
 }))
