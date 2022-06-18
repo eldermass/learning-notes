@@ -32,6 +32,7 @@ async function isExistObject (objectName) {
 // objectName: static/css/main.079c3a.css
 // withHash: 该文件名是否携带 hash 值
 async function uploadFile (objectName, withHash = false) {
+  objectName = objectName.replace('\\', '/')
   const file = resolve('./docs/.vuepress/dist', objectName)
 
   // 如果路径名称不带有 hash 值，则直接判断在 OSS 中不存在该文件名，需要重新上传
