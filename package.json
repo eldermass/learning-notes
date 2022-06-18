@@ -9,8 +9,8 @@
     "start": "vuepress dev docs",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:build-gitpage": "vuepress build docs --config docs/.vuepress/config-page.ts",
-    "docs:build-netlify": "vuepress build docs --config docs/.vuepress/config-netlify.ts",
+    "docs:build-gitpage": "vuepress build docs --config docs/.vuepress/config-page.ts && node ./uploadStatic.mjs",
+    "docs:build-netlify": "vuepress build docs --config docs/.vuepress/config-netlify.ts && node ./uploadStatic.mjs",
     "oss:upload": "node ./uploadStatic.mjs"
   },
   "devDependencies": {
