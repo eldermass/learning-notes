@@ -20,7 +20,7 @@ jobs:
     steps:
       - shell: bash
         env:
-          SUPER_SECRET: ${{ secrets.OSS_REGION }}
+          SUPER_SECRET: 121dddd
         run:
           echo "$ACCESS_KEY_ID $SUPER_SECRET"
 
