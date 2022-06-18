@@ -21,8 +21,8 @@ jobs:
       - shell: bash
         env:
           SUPER_SECRET: ${{ secrets.OSS_REGION }}
-        run: |
-          example-command "$ACCESS_KEY_ID $SUPER_SECRET"
+        run:
+          echo "$ACCESS_KEY_ID $SUPER_SECRET"
 
       - uses: actions/checkout@v2
         with:
