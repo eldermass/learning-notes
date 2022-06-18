@@ -6,6 +6,12 @@ on:
     branches: [master]
   # 手动触发部署
   workflow_dispatch:
+  
+env:
+  ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+  ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
+  OSS_REGION: ${{ secrets.OSS_REGION }}
+  OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
 
 jobs:
   docs:
@@ -41,11 +47,6 @@ jobs:
 
       # 运行构建脚本
       - name: Build VuePress site
-        env:
-          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-          ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
-          OSS_REGION: ${{ secrets.OSS_REGION }}
-          OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
         run: echo $ACCESS_KEY_ID && yarn docs:build-gitpage && yarn oss:upload
 
       # 查看 workflow 的文档来获取更多信息
