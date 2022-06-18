@@ -9,6 +9,7 @@ config()
 import PQueue from 'p-queue'
 const queue = new PQueue({ concurrency: 10 })
 
+console.log('region: ', process.env.OSS_REGION)
 const client = new OSS({
   region: process.env.OSS_REGION,
   accessKeyId: process.env.ACCESS_KEY_ID,
