@@ -11,11 +11,6 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     
-    env:
-      ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-      ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
-      OSS_REGION: ${{ secrets.OSS_REGION }}
-      OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -46,6 +41,11 @@ jobs:
 
       # 运行构建脚本
       - name: Build VuePress site
+        env:
+          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+          ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
+          OSS_REGION: ${{ secrets.OSS_REGION }}
+          OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
         run: yarn docs:build-gitpage
 
       # 查看 workflow 的文档来获取更多信息
