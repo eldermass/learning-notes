@@ -46,8 +46,7 @@ jobs:
           ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
           OSS_REGION: ${{ secrets.OSS_REGION }}
           OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
-        run: yarn docs:build-gitpage
-        run: yarn oss:upload
+        run: echo $ACCESS_KEY_ID && yarn docs:build-gitpage && yarn oss:upload
 
       # 查看 workflow 的文档来获取更多信息
       # @see https://github.com/crazy-max/ghaction-github-pages
