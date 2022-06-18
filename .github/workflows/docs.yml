@@ -18,12 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - shell: bash
-        env:
-          SUPER_SECRET: 121dddd
-        run:
-          echo "$ACCESS_KEY_ID $SUPER_SECRET"
-
       - uses: actions/checkout@v2
         with:
           # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
