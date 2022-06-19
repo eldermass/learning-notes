@@ -3,22 +3,18 @@
  * @Author: cy
  * @Date: 2022-06-19 02:06:00
  * @LastEditors: cy
- * @LastEditTime: 2022-06-19 02:06:00
+ * @LastEditTime: 2022-06-19 09:52:18
  */
 import { defineUserConfig, defaultTheme } from 'vuepress'
 const { googleAnalyticsPlugin } = require('@vuepress/plugin-google-analytics')
 const { docsearchPlugin } = require('@vuepress/plugin-docsearch')
-import { webpackBundler } from "@vuepress/bundler-webpack"
+import { viteBundler } from '@vuepress/bundler-vite'
 
 export default defineUserConfig({
-    base: '//learning-notes.oss-cn-chengdu.aliyuncs.com/',
-    bundler: webpackBundler({
-        configureWebpack: (config) => {
-            return {
-                output: {
-                    publicPath: "//learning-notes.oss-cn-chengdu.aliyuncs.com/"
-                }
-            }
+    bundler: viteBundler({
+        viteOptions:  {
+            root: '/',
+            base: 'https://learning-notes.oss-cn-chengdu.aliyuncs.com/'
         }
     }),
     head: [['link', { rel: 'icon', href: '/images/eight.png' }]],
