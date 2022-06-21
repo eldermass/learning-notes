@@ -14,14 +14,14 @@
 /**
  * @function 处理xhr请求后的返回值
  * @description 描述
- * @param res {{ code: Number, data: Array }}
- * @param callback { (data: string) => void }
- * @param message { string } 成功消息
- * @return { Array<String> } 字符串数组
+ * @param {{ code: number, data: array<{}> }} res 试试水
+ * @param { (data: string) => void } callback 回调函数
+ * @param  { string } message 成功消息
+ * @return { string[] } 字符串数组
  * @author cxy
  * @version 1.0.0
  * @example
  */
-function handleRes(res, callback, message) {}
+ function handleRes(res, callback, message) {}
 
 ```
