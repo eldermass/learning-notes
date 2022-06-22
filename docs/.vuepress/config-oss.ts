@@ -3,7 +3,7 @@
  * @Author: cy
  * @Date: 2022-06-19 02:06:00
  * @LastEditors: cy
- * @LastEditTime: 2022-06-19 09:52:18
+ * @LastEditTime: 2022-06-19 10:26:30
  */
 import { defineUserConfig, defaultTheme } from 'vuepress'
 const { googleAnalyticsPlugin } = require('@vuepress/plugin-google-analytics')
@@ -13,7 +13,6 @@ import { viteBundler } from '@vuepress/bundler-vite'
 export default defineUserConfig({
     bundler: viteBundler({
         viteOptions:  {
-            root: '/',
             base: 'https://learning-notes.oss-cn-chengdu.aliyuncs.com/'
         }
     }),
