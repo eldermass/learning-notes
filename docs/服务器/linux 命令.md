@@ -1,15 +1,41 @@
 # Linux 命令行
 
+## ssh 使用
+
+```sh
+# 生成非对称秘钥
+ssh-keygen -t [rsa|dsa]
+
+# 登录服务器
+ssh user@ip
+# 别名登录
+# ~/.ssh/config 中修改配置
+# Host aliasName
+# HostName 192.168.225.22
+# User root
+ssh aliasName
+
+# 注销
+logout
+
+# 隧道链接,含义是：在A上访问自己的8888端口相当于通过（B的）localhost的8080端口。
+ssh -NL 8888[本地A]:localhost:8080[目标B] aliasName
+    # 创建隧道常用的参数说明：
+    # -C：压缩传输，提高传输速度
+    # -f：将ssh转入后台执行，不占用当前的shell
+    # -N：建立静默连接（不回显ssh页面）
+    # -g：允许远程主机连接本地用于端口转发的端口
+    # -L：本地端口转发
+    # -R：远程端口转发
+    # -D：动态端口转发（socket代理）
+    # -p：指定ssh端口
+```
+
+[关于隧道](https://blog.csdn.net/weixin_42742658/article/details/122735119)
+
 ## 一. 开关机
 
 ```bash
-# 登录
-ssh user@ip
-# 注销
-logout
-# 无密登录，可用生成公钥私钥
-ssh-keygen -t [rsa|dsa]
-
 # 关机、重启
 shutdown
     -h now          立即关机
@@ -305,6 +331,11 @@ rz
 sz filename
 
 ```
+
+### 美化命令行
+
+使用`ohmyzsh`美化命令行
+使用`solarized`美化 vim
 
 ### ssh 免密登陆
 

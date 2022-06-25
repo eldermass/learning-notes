@@ -1,6 +1,6 @@
 # shell 编程入门
 
-文件头指明执行程序 #!/bin/bash  #!/usr/bin/python
+文件头指明执行程序 #!/bin/bash  #!/usr/bin/python #!/usr/bin/node
 
 ## 一、变量
 

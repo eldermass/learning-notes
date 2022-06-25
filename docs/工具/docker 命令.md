@@ -123,6 +123,9 @@ docker rmi image
 
 # 将容器的内容拷贝到宿主
   docker cp mysql:/var/lib/mysql /www/docker/mysql/data
+
+# 查看容器的网络情况
+  docker network ls
 ```
 
 ## Dockfile 文件
