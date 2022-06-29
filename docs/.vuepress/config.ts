@@ -158,6 +158,16 @@ export default defineUserConfig({
             },
             {
                 collapsible: true,
+                text: 'Golang',
+                link: '/go/golang基础.md',
+                children: [
+                    '/go/golang基础.md',
+                    '/go/区块链与go.md',
+                    '/go/beego.md'
+                ]
+            },
+            {
+                collapsible: true,
                 text: '数据库',
                 link: '/数据库/redis入门.md',
                 children: [
