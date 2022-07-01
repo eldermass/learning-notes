@@ -133,6 +133,7 @@ export default defineUserConfig({
                 children: [
                     '/node/Koa 解析.md',
                     '/node/socket.md',
+                    '/node/文件操作.md',
                 ]
             },
             {
