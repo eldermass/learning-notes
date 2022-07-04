@@ -25,24 +25,23 @@ head4.next = head5
  * @return {ListNode}
  */
 var removeNthFromEnd = function (head, n) {
-    let length = 1,
+    let length = 0,
         tempHead = head
-    while (tempHead.next) {
+    while(tempHead) {
         length++
         tempHead = tempHead.next
     }
-    // console.log(length, head)
-    let skipIndex = 1
-    tempHead = head
-    while (true) {
-        if (skipIndex = length - n) {
-            tempHead.next = tempHead.next.next
-            break
-        }
-        tempHead = tempHead.next
-        skipIndex++
+
+    let dummy = new ListNode(0, head),
+        index = 0,
+        temp = dummy
+    while (index < length - n) {
+        temp = temp.next
+        index++
     }
-    return tempHead
+    temp.next = temp.next.next
+
+    return dummy.next
 }
 
-removeNthFromEnd(head, 2)
+console.log(removeNthFromEnd(head, 2))
