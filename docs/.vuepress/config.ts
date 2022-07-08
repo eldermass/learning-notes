@@ -55,6 +55,7 @@ export default defineUserConfig({
                     '/工具/Nginx 配置.md',
                     '/工具/docker 命令.md',
                     '/工具/终端命令.md',
+                    '/工具/npx用途.md',
                 ]
             },
             {
@@ -82,7 +83,8 @@ export default defineUserConfig({
                 link: '/规范/RESTFULAPI.md',
                 children: [
                     '/规范/RESTFULAPI.md',
-                    '/规范/PromiseA+.md'
+                    '/规范/PromiseA+.md',
+                    '/规范/前端项目强制规范.md'
                 ]
             },
             {
