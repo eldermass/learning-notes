@@ -19,6 +19,7 @@ ssh aliasName
 logout
 
 # 隧道链接,含义是：在A上访问自己的8888端口相当于通过（B的）localhost的8080端口。
+# aliasName 可以写作 user@ip
 ssh -NL 8888[本地A]:localhost:8080[目标B] aliasName
     # 创建隧道常用的参数说明：
     # -C：压缩传输，提高传输速度
@@ -29,6 +30,9 @@ ssh -NL 8888[本地A]:localhost:8080[目标B] aliasName
     # -R：远程端口转发
     # -D：动态端口转发（socket代理）
     # -p：指定ssh端口
+
+# 通过 ssh 测试端口链接成功与否
+ssh -v -p 1521 oracle@192.168.150.168
 ```
 
 [关于隧道](https://blog.csdn.net/weixin_42742658/article/details/122735119)
