@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-47a76b3b","path":"/go/%E5%8C%BA%E5%9D%97%E9%93%BE%E4%B8%8Ego.html","title":"\u533A\u5757\u94FE\u4E0Ego","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1656507963000,"contributors":[{"name":"chenyue","email":"285653184@qq.com","commits":1}]},"filePathRelative":"go/\u533A\u5757\u94FE\u4E0Ego.md"}');export{e as data};
