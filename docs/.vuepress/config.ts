@@ -54,7 +54,6 @@ export default defineUserConfig({
                     '/工具/Git常用命令.md',
                     '/工具/Nginx 配置.md',
                     '/工具/docker 命令.md',
-                    '/工具/终端命令.md',
                     '/工具/npx用途.md',
                 ]
             },
@@ -64,6 +63,7 @@ export default defineUserConfig({
                 link: '/服务器/linux 命令.md',
                 children: [
                     '/服务器/linux 命令.md',
+                    '/服务器/linux 实践.md',
                     '/服务器/shell编程.md',
                     '/服务器/vim 使用.md',
                     '/服务器/linux安装imagemagick.md',
