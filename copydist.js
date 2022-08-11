@@ -1,7 +1,6 @@
 const fs = require("fs")
 const { join, dirname, basename } = require("path")
 
-deleteFiles("mdist")
 copyFiles("docs/.vuepress/dist", "mdist")
 
 async function copyFiles(oldPath, newPath) {

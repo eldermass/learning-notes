@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-02494146","path":"/go/beego.html","title":"beego","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1656507963000,"contributors":[{"name":"chenyue","email":"285653184@qq.com","commits":1}]},"filePathRelative":"go/beego.md"}');export{e as data};
