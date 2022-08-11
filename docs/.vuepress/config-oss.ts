@@ -3,7 +3,7 @@
  * @Author: cy
  * @Date: 2022-06-19 02:06:00
  * @LastEditors: cy
- * @LastEditTime: 2022-06-19 10:26:30
+ * @LastEditTime: 2022-08-11 10:40:09
  */
 import { defineUserConfig, defaultTheme } from 'vuepress'
 const { googleAnalyticsPlugin } = require('@vuepress/plugin-google-analytics')
@@ -16,7 +16,7 @@ export default defineUserConfig({
             base: 'https://learning-notes.oss-cn-chengdu.aliyuncs.com/'
         }
     }),
-    head: [['link', { rel: 'icon', href: '/images/eight.png' }]],
+    head: [['link', { rel: 'icon', href: '/images/1.png' }]],
     lang: 'zh-CN',
     title: 'Morning',
     description: '学习技术时瞎记的笔记',
@@ -29,7 +29,7 @@ export default defineUserConfig({
         })
     ],
     theme: defaultTheme({
-        logo: '/images/eight.png', // 注意图片放在 public 文件夹下
+        logo: '/images/1.png', // 注意图片放在 public 文件夹下
         navbar: [
             {
                 // 右上导航航条 docs/.vuepress/README.md
