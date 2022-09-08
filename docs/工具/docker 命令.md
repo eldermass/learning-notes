@@ -145,7 +145,7 @@ docker-compose config  -q
 
 # 运行
   docker-compose up       执行当前目录的.yml文件
-              -d        后台运行
+              -d          后台运行,以分离模式(-d)启动所有服务(您不会在分离模式下看到任何日志)
               --force-recreate 可以强制重建容
 
   docker-compose down 停止所有容器，并删除容器
@@ -155,6 +155,7 @@ docker-compose config  -q
 
 # 查看服务日志
   docker-compose logs
+  docker-compose logs -f -t 重视自己的日志中所有正在运行的服务,而-f意味着你跟随日志输出和-t选项使您的时间戳
 
 # 某服务里3000端口，映射的公共端口
   docker-compose port service_name 3000
