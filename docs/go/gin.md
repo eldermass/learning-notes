@@ -85,3 +85,141 @@ r.POST("/form", func(c *gin.Context) {
 ```
 
 5. 上传文件
+
+```go
+r.POST("/upload", func(c *gin.Context) {
+    file, err := c.FormFile("file")
+    if err != nil {
+        c.String(500, "上传出错")
+    }
+    c.SaveUploadedFile(file, file.Filename)
+    c.String(http.StatusOK, file.Filename)
+})
+```
+
+多个文件
+
+```go
+r.POST("/uploads", func(c *gin.Context) {
+    form, err := c.MultipartForm()
+
+    if err != nil {
+        c.String(http.StatusBadRequest, fmt.Sprintf("get err %s", err.Error()))
+    }
+    files := form.File["files"]
+
+    for _, file := range files {
+        if err := c.SaveUploadedFile(file, file.Filename); err != nil {
+            c.String(http.StatusBadRequest, fmt.Sprintf("upload err %s", err.Error()))
+            return
+        }
+    }
+    c.String(200, fmt.Sprintf("upload ok %d files", len(files)))
+})
+```
+
+6. routers group
+
+```go
+v1 := r.Group("/v1")
+// {} 是书写规范
+{
+    v1.GET("/login", login)
+    v1.GET("submit", submit)
+}
+// 3.监听端口，默认在8080
+// Run("里面不指定端口号默认为8080")
+r.Run(":8000")
+```
+
+7. 拆分 router.go 包
+
+```go
+func main() {
+    r := gin.Default()
+    router.SetupRouter(r)
+    router.SetupRouter2(r)
+    // ...
+
+    if err := r.Run(":8000"); err != nil {
+        fmt.Println("startup service failed, err:%v\n", err)
+    }
+}
+
+// 分包
+func SetupRouter(e *gin.Engine) {
+    e.GET("/router", func(c *gin.Context) {
+        c.String(200, fmt.Sprintf("router: %s", "hello"))
+    })
+}
+
+func SetupRouter2(e *gin.Engine) {
+    e.GET("/router2", func(c *gin.Context) {
+        c.String(200, fmt.Sprintf("router: %s", "hello"))
+    })
+}
+```
+
+8. 路由注册
+
+```go
+// app/blog/router.go
+func Routers(e *gin.Engine) {
+    e.GET("/post", postHandler)
+    e.GET("/comment", commentHandler)
+}
+// app/shop/router.go
+func Routers(e *gin.Engine) {
+    e.GET("/goods", goodsHandler)
+    e.GET("/checkout", checkoutHandler)
+}
+
+
+// routers/routers.go
+type Option func(*gin.Engine)
+
+var options = []Option{}
+
+// 注册app的路由配置
+func Include(opts ...Option) {
+    options = append(options, opts...)
+}
+
+// 初始化
+func Init() *gin.Engine {
+    r := gin.New()
+    for _, opt := range options {
+        opt(r)
+    }
+    return r
+}
+
+// main.go
+func main() {
+    // 加载多个APP的路由配置
+    routers.Include(shop.Routers, blog.Routers)
+    // 初始化路由
+    r := routers.Init()
+    if err := r.Run(); err != nil {
+        fmt.Println("startup service failed, err:%v\n", err)
+    }
+}
+```
+
+结构
+
+```bash
+gin_demo
+├── app
+│   ├── blog
+│   │   ├── handler.go
+│   │   └── router.go
+│   └── shop
+│       ├── handler.go
+│       └── router.go
+├── go.mod
+├── go.sum
+├── main.go
+└── routers
+    └── routers.go
+```
