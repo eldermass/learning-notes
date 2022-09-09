@@ -166,7 +166,8 @@ export default defineUserConfig({
                 children: [
                     '/go/golang基础.md',
                     '/go/区块链与go.md',
-                    '/go/beego.md'
+                    '/go/beego.md',
+                    '/go/gin.md'
                 ]
             },
             {
