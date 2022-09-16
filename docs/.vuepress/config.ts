@@ -3,7 +3,7 @@ const { googleAnalyticsPlugin } = require('@vuepress/plugin-google-analytics')
 const { docsearchPlugin } = require('@vuepress/plugin-docsearch')
 
 export default defineUserConfig({
-    head: [['link', { rel: 'icon', href: '/images/eight.png' }]],
+    head: [['link', { rel: 'icon', href: '/images/1.png' }]],
     lang: 'zh-CN',
     title: 'Morning',
     description: '学习技术时瞎记的笔记',
@@ -16,7 +16,7 @@ export default defineUserConfig({
         })
     ],
     theme: defaultTheme({
-        logo: '/images/eight.png', // 注意图片放在 public 文件夹下
+        logo: '/images/1.png', // 注意图片放在 public 文件夹下
         navbar: [
             {
                 // 右上导航航条 docs/.vuepress/README.md
@@ -26,10 +26,21 @@ export default defineUserConfig({
             {
                 text: '学习网站',
                 children: [
-                    { text: 'Github', link: 'https://github.com' }, // 可不写后缀 .md
-                    { text: '掘金', link: 'https://juejin.cn/' }, // 外部链接
-                    { text: '前端部署', link: 'https://q.shanyue.tech/deploy/'}
+                    { text: 'Github', link: 'https://github.com' },
+                    { text: '掘金', link: 'https://juejin.cn/' }, 
+                    { text: '前端部署', link: 'https://q.shanyue.tech/deploy/'},
+                    { text: 'MDN', link: 'https://developer.mozilla.org/zh-CN/docs/Web'},
+                    { text: 'learnku', link: 'https://learnku.com/'}
                 ],
+            },
+            {
+                text: '工具',
+                children: [
+                    {
+                        text: '菜鸟工具',
+                        link: 'https://c.runoob.com/'
+                    }
+                ]
             },
             // {
             //     text: '其它参考',
@@ -67,6 +78,7 @@ export default defineUserConfig({
                     '/服务器/shell编程.md',
                     '/服务器/vim 使用.md',
                     '/服务器/linux安装imagemagick.md',
+                    '/服务器/windows中安装open-ssh.md',
                 ]
             },
             {

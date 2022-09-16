@@ -1,0 +1,1 @@
+import{_ as a,o,c as t,a as e,b as r}from"./app.ddafede6.js";const c={},s=e("h1",{id:"beego",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#beego","aria-hidden":"true"},"#"),r(" beego")],-1),_=[s];function n(d,i){return o(),t("div",null,_)}var l=a(c,[["render",n],["__file","beego.html.vue"]]);export{l as default};
