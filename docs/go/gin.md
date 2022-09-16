@@ -209,17 +209,92 @@ func main() {
 结构
 
 ```bash
-gin_demo
 ├── app
-│   ├── blog
-│   │   ├── handler.go
-│   │   └── router.go
-│   └── shop
-│       ├── handler.go
-│       └── router.go
+│   ├── blog
+│   │   ├── handler.go
+│   │   └── router.go
+│   ├── html
+│   │   ├── handler.go
+│   │   └── router.go
+│   └── json-demo
+│       ├── handler.go
+│       ├── hanlder2.go
+│       └── router.go
 ├── go.mod
 ├── go.sum
 ├── main.go
-└── routers
-    └── routers.go
+├── routers
+│   └── routers.go
+└── template
+    └── index.html
 ```
+
+## 数据
+
+1. JSON
+
+``` go
+// 定义了值得来源
+type Login struct {
+    User    string `form:"username" json:"user" uri:"user" xml:"user" binding:"required"`
+    Pssword string `form:"password" json:"password" uri:"password" xml:"password" binding:"required"`
+}
+
+func JsonHandler(c *gin.Context) {
+    var json Login
+    // ShouldBindJSON 取用结构体中的 json 值
+    if err := c.ShouldBindJSON(&json); err != nil {
+        c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"status": "200"})
+}
+```
+
+## 响应
+
+1. 重定向
+
+```go
+e.GET("/", func(ctx *gin.Context) {
+    // 302
+    ctx.Redirect(http.StatusFound, "/index")
+})
+```
+
+2. html 模板
+
+```go
+r := gin.Default()
+r.LoadHTMLGlob("tem/*")
+r.GET("/index", func(c *gin.Context) {
+    // 模板中 {{.title}} 替换值
+    c.HTML(http.StatusOK, "index.html", gin.H{"title": "我是测试"})
+})
+r.Run()
+```
+
+3. 异步
+
+```go
+r.GET("/long_async", func(c *gin.Context) {
+    // 需要搞一个副本
+    copyContext := c.Copy()
+    // 异步处理
+    go func() {
+        time.Sleep(3 * time.Second)
+        log.Println("异步执行：" + copyContext.Request.URL.Path)
+    }()
+    c.JSON(http.StatusOK, gin.H{"msg": "okok"})
+})
+// 同步处理
+r.GET("/long_sync", func(c *gin.Context) {
+    time.Sleep(3 * time.Second)
+    log.Println("同步执行：" + c.Request.URL.Path)
+    c.JSON(http.StatusOK, gin.H{"msg": "okok"})
+})
+
+```
+
+## 中间件
