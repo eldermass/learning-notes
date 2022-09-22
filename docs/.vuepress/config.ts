@@ -148,6 +148,7 @@ export default defineUserConfig({
                     '/node/Koa 解析.md',
                     '/node/socket.md',
                     '/node/文件操作.md',
+                    '/node/可执行命令.md'
                 ]
             },
             {
