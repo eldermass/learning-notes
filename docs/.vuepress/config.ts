@@ -10,8 +10,8 @@ export default defineUserConfig({
     plugins: [
         googleAnalyticsPlugin({ id: 'G-JML3S15FQR' }),
         docsearchPlugin({
-            appId: '0AV4ZN6CL7',
-            apiKey: 'c2076f305cbdada81fd44d09cdfbb65d',
+            appId: 'Q4HPBKXXD0',
+            apiKey: 'be4df900cb525feee9abd3f50efbd415',
             indexName: 'netlify_88218300-5aaf-4075-a2ed-3949ec6439e6_master_all'
         })
     ],
