@@ -1,6 +1,6 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
-const { googleAnalyticsPlugin } = require('@vuepress/plugin-google-analytics')
-const { docsearchPlugin } = require('@vuepress/plugin-docsearch')
+import { googleAnalyticsPlugin } from "@vuepress/plugin-google-analytics"
+import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 
 export default defineUserConfig({
     head: [['link', { rel: 'icon', href: '/images/1.png' }]],
@@ -191,6 +191,14 @@ export default defineUserConfig({
                     '/数据库/redis入门.md',
                     '/数据库/mysql入门.md',
                     '/数据库/mongoDB入门.md'
+                ]
+            },
+            {
+                collapsible: true,
+                text: '其他',
+                link: '/其他/gojs 去水印.md',
+                children: [
+                    '/其他/gojs 去水印.md'
                 ]
             }
         ],
