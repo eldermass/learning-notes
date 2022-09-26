@@ -4,13 +4,7 @@ import { docsearchPlugin } from '@vuepress/plugin-docsearch'
 
 export default defineUserConfig({
     head: [['link', { rel: 'icon', href: '/images/1.png' }]],
-    locales: {
-        '/zh-CN/': {
-            lang: '中文2',
-            title: 'Morning',
-            description: '学习技术时瞎记的笔记',
-        },
-    },
+    lang: "zh-CN",
     title: 'Morning',
     description: '学习技术时瞎记的笔记',
     plugins: [

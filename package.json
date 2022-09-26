@@ -11,7 +11,7 @@
     "docs:build": "vuepress build docs",
     "docs:build-gitpage": "vuepress build docs --config docs/.vuepress/config-page.ts",
     "docs:build-mayun": "vuepress build docs --config docs/.vuepress/config-mayun.ts && node copydist.js",
-    "docs:build-netlify": "vuepress build docs --config docs/.vuepress/config-netlify.ts",
+    "docs:build-netlify": "node ./fixDocsearch.js && vuepress build docs --config docs/.vuepress/config-netlify.ts",
     "docs:build-oss": "vuepress build docs --config docs/.vuepress/config-oss.ts",
     "oss:upload": "node ./uploadStatic.mjs"
   },
