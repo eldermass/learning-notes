@@ -1,10 +1,11 @@
 {
   "name": "learning-notes",
   "version": "1.0.0",
-  "description": "to record what i learned before",
+  "description": "To record what I learned before",
   "main": "index.js",
-  "author": "cherry <285653184@qq.com>",
+  "author": "xuanyu <285653184@qq.com>",
   "license": "MIT",
+  "homepage": "https://notes.1000melody.com/",
   "scripts": {
     "start": "vuepress dev docs",
     "docs:dev": "vuepress dev docs",
