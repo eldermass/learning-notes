@@ -1,0 +1,15 @@
+### sonar-scanner ###########################################
+    sonar-scanner:
+      build: ./sonar-scanner
+      volumes:
+        - ${APP_CODE_PATH_HOST}:/code
+#        - ${APP_CODE_PATH_HOST}/sass-web:/usr/src
+#        - ./sonar-scanner/saas-web.properties:/opt/sonar-scanner/conf/sonar-scanner.properties
+        - ./sonar-scanner/entrypoint.sh:/var/entrypoint.sh
+      environment:
+        - SONAR_HOST_URL=https://devtools.cme-im.com:59000/
+        - SONAR_LOGIN=e04e077f4f91159c9e78aa44e3d66761815680ba
+        - SONAR_PROJECT_BASE_DIR=/code/saas-web
+      networks:
+        - backend
+#      entrypoint: /var/entrypoint.sh # 这个脚本防止容器因执行完脚本后自动关闭
