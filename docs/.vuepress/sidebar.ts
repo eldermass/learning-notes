@@ -6,8 +6,8 @@ export default [
         children: [
             '/工具/Git常用命令.md',
             '/工具/Nginx 配置.md',
-            '/工具/nginx模块.md',
-            '/工具/docker 命令.md',
+            '/工具/Nginx 模块.md',
+            '/工具/Docker 命令.md',
             '/工具/npx用途.md',
         ]
     },

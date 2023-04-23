@@ -107,7 +107,8 @@ git clean 参数
 git commit --amend          重写最近的一次提交(推送后提交会有冲突)
 
 git rebase -i HEAD~3        重写最近3次的历史,(修改提交历史，重拍提交记录)
-    解释：进入编辑器后，将需要改的版本对应的pick改为edit。编辑完成后git会重播历史提交，当进入到edit的版本时就会暂停，你可以选rebase --continue跳过，或者commit --amend重写那一次提交然后在--continue
+    解释：进入编辑器后，将需要改的版本对应的pick改为edit。编辑完成后git会重播历史提交，当进入到edit的版本时就会暂停，
+        你可以选rebase --continue跳过，或者commit --amend重写那一次提交然后在--continue
 
 压制(Squashing)提交 squash， 可以将提交合并到前一个记录中
 ```
@@ -187,6 +188,32 @@ git cherry-pick 版本号
 # 当有冲突的时候，cherry-pick会中断
 # 解决冲突后，git add  然后 git cherry-pick --continue
 # 或者使用git cherry-pick --abort 放弃操作
+```
+
+### Tag标签
+
+```bash
+# 打印标签列表
+git tag
+# 打印符合检索条件的标签
+git tag -l "v1.8.5*"
+# 查看对应标签状态
+git show v1.4
+
+# 创建轻量标签
+git tag v1.0 -light
+# 创建带附注标签
+git tag -a v1.0 "版本1.0" -m 版本号
+# 使用特定commit创建标签
+git tag -a <版本号> <SHA值> -m "<备注信息>"
+
+# 删除本地标签
+git tag -d v1.0
+# 删除远程标签
+git push origin :refs/tags/v1.0
+
+# 推送所有标签
+git push origin --tags
 ```
 
 ### 版本回退

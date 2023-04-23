@@ -1,4 +1,4 @@
-# nginx模块
+# Nginx 模块
 
 ## headers-more-nginx-module
 
@@ -47,7 +47,7 @@ configure arguments: --prefix=/usr/local/nginx --with-http_ssl_module ......
 
 ```bash
 # 将 add-module= 加入到原有配置中
-./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-http_sub_module --with-http_gzip_static_module --with-http_stub_status_module --add-module=/data/software/ngx_http_substitutions_filter_module --add-module=/data/software/ngx_http_google_filter_module
+./configure --prefix=/usr/local/nginx --with-http_ssl_module ...... --add-module=/data/software/headers-more-nginx-module
 make   
 #千万不要make install，不然就真的覆盖了
 ```

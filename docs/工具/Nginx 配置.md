@@ -1,4 +1,4 @@
-# nginx 笔记
+# Nginx 配置
 
 <!-- [location 匹配语法](https://www.cnblogs.com/pyyu/p/10085444.html) -->
 

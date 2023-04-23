@@ -1,4 +1,4 @@
-# docker 入门
+# Docker 基础
 
 [docker 官网](https://www.docker.com)  
 [命令大全](https://www.runoob.com/docker/docker-command-manual.html)  
@@ -171,10 +171,109 @@ docker-compose run service_name command
 
 ```
 
-### docker-compose.yaml 文件
+### docker-compose.yaml 文件示例
 
 ```yaml
-version: 3
+version: 3.5
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
+
+services:
+
+### NGINX Server #########################################
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        - CHANGE_SOURCE=true
+        - PHP_UPSTREAM_CONTAINER=php-fpm
+        - PHP_UPSTREAM_PORT=9000
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    volumes:
+      - ../www/:/var/www:cached
+      - ./logs/nginx/:/var/log/nginx
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/ssl/:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    networks:
+      frontend:
+        aliases:
+          - nginx_frontend
+          # 使用别名有利于在容器内部使用别名相互访问
+      backend:
+        aliases:
+          - nginx_backend
+
+### MySQL ################################################
+  mysql:
+    build:
+      context: ./mysql
+      args:
+        - MYSQL_VERSION=latest
+    environment:
+      - MYSQL_DATABASE=default
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+      - MYSQL_ROOT_PASSWORD=test
+      - TZ=UTC
+    volumes:
+      - ~/.laradock/data/mysql:/var/lib/mysql
+      - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+### Redis ################################################
+  redis:
+    build: ./redis
+    volumes:
+      - ~/.laradock/data/redis:/data
+    command: --requirepass secret_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+### 前端端 ################################################
+  frontend:
+    build: ../frontend
+    ports:
+      - "8001:3000"
+    networks:
+      - frontend
+      - backend
+
+### 后端 ################################################
+  backend:
+    build: ../backend
+    ports:
+      - "8002:8001"
+    networks:
+      - frontend
+      - backend
+
+### 后端管理台 ################################################
+  backend_desk:
+    build: ../backend_desk
+    ports:
+      - "8003:80"
+    networks:
+      - frontend
+      - backend
 ```
 
 ## 其他

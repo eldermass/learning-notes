@@ -1,7 +1,7 @@
 export default [
     {
         // 右上导航航条 docs/.vuepress/README.md
-        text: '概述',
+        text: '首页',
         link: '/',
     },
     {
@@ -23,6 +23,20 @@ export default [
             }
         ]
     },
+    {
+        text: "关于",
+        icon: "puzzle-piece",
+        children: [
+            {
+                text: "vuepress 2.x 文档",
+                link: "https://v2.vuepress.vuejs.org/"
+            },
+            {
+                text: "theme-hope 文档",
+                link: "https://theme-hope.vuejs.press/"
+            }
+        ]
+    }
     // {
     //     text: '其它参考',
     //     children: [
