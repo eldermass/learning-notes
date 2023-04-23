@@ -1,7 +1,7 @@
 ---
 home: true
-heroText: 组件文档
-tagline: 通用组件库的文档及示例
+heroText: 未知领域
+tagline: 探索，发现，记录
 heroImage: /home.jpg   # 注意这里可以使外链，也可以是静态资源
 actions: [
   { text: 在线地址, link: https://notes.1000melody.com/, type: primary },

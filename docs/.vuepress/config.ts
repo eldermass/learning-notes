@@ -13,9 +13,11 @@ export default defineUserConfig({
     plugins: [
         googleAnalyticsPlugin({ id: 'G-JML3S15FQR' }),
         docsearchPlugin({
-            appId: 'XRAU5F9J7U',
+            appId: 'Q4HPBKXXD0',
             apiKey: '8d69aae991923a7a7624d7f7a341e9e3',
-            indexName: 'learning_note'
+            // apiKey: '8d69aae991923a7a7624d7f7a341e9e3',
+            // indexName: 'learning_note'
+            indexName: 'netlify_88218300-5aaf-4075-a2ed-3949ec6439e6_master_all'
         })
     ],
     theme: hopeTheme({
