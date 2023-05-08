@@ -28,7 +28,8 @@ export default defineUserConfig({
             mdEnhance: {
                 vuePlayground: true,
                 vPre: true,
-                demo: true
+                demo: true,
+                codetabs: true,
             }
         },
         themeColor: {
