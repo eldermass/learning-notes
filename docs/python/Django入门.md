@@ -188,3 +188,107 @@ python manage.py migrate
 ```
 
 8. 启动项目，访问 <http://localhost:8000/api/polls/> 或 <http://localhost:8000/admin/polls/> 即可看到数据
+
+## 部署
+
+可使用 heroku 免费部署
+
+### 使用 wsgi 部署
+
+1. 安装 WSGI 服务器，gunicorn，uWSGI 等
+
+```bash
+pipenv install gunicorn
+```
+
+2. 在 mysite 目录下，创建 wsgi.py 文件。脚手架会自动创建
+
+```python
+import os
+from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
+
+application = get_wsgi_application()
+```
+
+3. 在 mysite 目录下，创建 Procfile 文件，指定启动命令
+
+```bash
+web: gunicorn mysite.wsgi
+```
+
+或使用 shell 启动，gunicorn myproject.wsgi:application
+
+4. 在 mysite/settings.py 中配置
+
+```python
+# 修改 DEBUG 为 False，设置 ALLOWED_HOSTS
+DEBUG = False
+
+ALLOWED_HOSTS = ['*']
+
+# 设置静态文件的访问
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# 设置数据库
+
+# 设置日志
+```
+
+5. 配置 Nginx 或其他 Web 服务器以反向代理 Gunicorn 服务器。
+
+```bash
+location / {
+    proxy_pass http://127.0.0.1:8000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+```
+
+### 使用 asgi 部署
+
+1. 安装 ASGI 服务器，Daphne、Uvicorn、Hypercorn 等。
+
+```bash
+pipenv install daphne
+```
+
+2. 在 mysite 目录下，创建 asgi.py 文件。脚手架会自动创建
+
+```python
+import os
+from django.core.asgi import get_asgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
+
+application = get_asgi_application()
+```
+
+3. 在 mysite 目录下，创建 Procfile 文件，指定启动命令
+
+```bash
+web: daphne mysite.asgi:application
+```
+
+或使用 shell 启动，daphne myproject.asgi:application
+
+4. 在 mysite/settings.py 中配置
+
+5. 配置 Nginx 或其他 Web 服务器以反向代理 ASGI 服务器。
+
+```bash
+    location / {
+    proxy_pass http://127.0.0.1:8000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+    # WebSocket support
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+}
+```
