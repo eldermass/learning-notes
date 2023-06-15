@@ -276,6 +276,23 @@ services:
       - backend
 ```
 
+### 可以使用 portainer 来管理 docker
+
+```yaml
+# 通过 docker-compose 安装
+services:
+### portainer 是一个docker的web管理工具，可以用来管理docker的容器，镜像，网络，数据卷等
+  portainer:
+    image: portainer/portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /data/docker/portainer/data:/data
+
+```
+
 ## 其他
 
 ### 数据拷贝

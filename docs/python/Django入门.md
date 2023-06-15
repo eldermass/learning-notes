@@ -70,7 +70,7 @@ python manage.py createsuperuser
 6. 启动项目
 
 ```bash
-python manage.py runserver
+python manage.py runserver ((0.0.0.0):(port))
 ```
 
 ## 全局配置
