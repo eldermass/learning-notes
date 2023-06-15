@@ -61,6 +61,8 @@ DATABASES = {
     }
 }
 
+# 有表结构改动时，创建数据库迁移
+# python manage.py makemigrations polls
 # 执行数据库迁
 python manage.py migrate
 # 创建管理用户
@@ -81,7 +83,26 @@ python manage.py runserver ((0.0.0.0):(port))
 4. 设置 LANGUAGE_CODE 为 zh-hans，设置为中文
 5. 设置 MEDIA_URL 和 MEDIA_ROOT，资源文件的访问
 
-## 实现 mysite 应用
+### 为 django 配置 mysql
+
+```bash
+# 安装驱动
+pipenv install mysqlclient
+
+# 在 mysite/settings.py 中，修改数据库配置
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cool_admin', # 数据库名
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '10.10.2.201',
+        'PORT': '3386'
+    }
+}
+```
+
+## 实现一个 polls 应用
 
 1. 在 polls/models.py 中，创建模型
 
