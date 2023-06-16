@@ -210,6 +210,36 @@ python manage.py migrate
 
 8. 启动项目，访问 <http://localhost:8000/api/polls/> 或 <http://localhost:8000/admin/polls/> 即可看到数据
 
+9. 添加权限
+
+在 polls/views.py 中，添加权限
+
+```python
+from rest_framework import permissions
+
+# 在 ViewSet 中添加 permission_classes 属性
+class PollViewSet(viewsets.ModelViewSet):
+    serializer_class = PollSerializer
+    queryset = Question.objects.all()
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+```
+
+10. 美化后台管理界面
+
+```bash 
+# 安装
+pipenv install django-simpleui
+
+# 在 mysite/settings.py 中，INSTALLED_APPS 中添加 'simpleui'
+INSTALLED_APPS = [
+    'simpleui',
+    ...
+]
+
+# 在 setting 中添加主题色
+SIMPLEUI_DEFAULT_THEME = 'green'
+```
+
 ## 部署
 
 可使用 heroku 免费部署
