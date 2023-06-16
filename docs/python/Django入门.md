@@ -313,3 +313,22 @@ web: daphne mysite.asgi:application
     proxy_set_header Connection "upgrade";
 }
 ```
+
+## 数据库及迁移
+
+### 数据库迁移命令
+
+```bash
+# 创建迁移文件
+python manage.py makemigrations
+# 查看迁移文件
+python manage.py sqlmigrate polls 0001
+# 查看迁移状态
+python manage.py showmigrations polls
+# 回滚迁移
+python manage.py migrate polls zero
+# 回滚到指定迁移
+python manage.py migrate polls 0001
+# 执行迁移
+python manage.py migrate polls
+```
