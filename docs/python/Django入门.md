@@ -238,6 +238,40 @@ INSTALLED_APPS = [
 
 # 在 setting 中添加主题色
 SIMPLEUI_DEFAULT_THEME = 'green'
+
+# 根据教程处理细节
+https://zhuanlan.zhihu.com/p/372185998
+```
+
+11. 安装 django-filter，用于过滤
+
+12. 安装 debug-toolbar，用于调试
+
+```PYTHON
+pipenv install django-debug-toolbar
+
+# 在 settings.py 中，INSTALLED_APPS 中添加 'debug_toolbar'
+INSTALLED_APPS = [
+    'debug_toolbar',
+    ...
+]
+# 在 settings.py 中，MIDDLEWARE 中添加 'debug_toolbar.middleware.DebugToolbarMiddleware'
+MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ...
+]
+# 在 settings.py 中，添加配置
+DEBUG = True
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]
+
+# 在 mysite/urls.py 中，添加配置
+urlpatterns = [
+    ...
+    path('__debug__/', include('debug_toolbar.urls')),
+]
 ```
 
 ## 部署
