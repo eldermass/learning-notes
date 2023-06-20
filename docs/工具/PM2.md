@@ -22,32 +22,42 @@ server.listen(8080) // 监听端口
 console.log("Server running at http://localhost:8080/")
 ```
 
-@tab ecosystem.config.js
+@tab pm2.json
 
 ```js
-module.exports = {
-    apps: [
-        {
-            name: "test",
-            script: "./server.js",
-        },
-    ],
+{
+  "name": "test-pm2",
+  "script": "server.js",
+  "instances": "2",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "env_production" : {
+    "NODE_ENV": "production"
+  }
 }
 ```
 
 @tab Dockerfile
 
 ```dockerfile
-FROM treehouses/pm2:latest
+FROM keymetrics/pm2:latest-alpine
 
 WORKDIR /app
 
 COPY . /app
 
+# Install app dependencies
+ENV NPM_CONFIG_LOGLEVEL warn
+RUN npm install --production
+
+# Show current folder structure in logs
+RUN ls -al -R
+
 EXPOSE 8080
 
 # 如果报错 [pm2-runtime not found 应该是换行符的问题
-CMD ["pm2-runtime", "start", "/app/ecosystem.config.js"]
+CMD [ "pm2-runtime", "start", "pm2.json" ]
 ```
 
 @tab:active docker-compose.yml
@@ -57,7 +67,7 @@ version: "3.5"
 
 services:
     ### Node ################################################
-    node:
+    pm2:
         build:
             context: .
         ports:
@@ -65,3 +75,16 @@ services:
 ```
 
 :::
+
+2. 使用 pm2 命令
+
+```bash
+# Monitoring CPU/Usage of each process
+docker exec -it <container-id> pm2 monit
+# Listing managed processes
+docker exec -it <container-id> pm2 list
+# Get more information about a process
+docker exec -it <container-id> pm2 show
+# 0sec downtime reload all applications
+docker exec -it <container-id> pm2 reload all
+```

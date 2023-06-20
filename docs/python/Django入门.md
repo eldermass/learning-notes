@@ -226,7 +226,7 @@ class PollViewSet(viewsets.ModelViewSet):
 
 10. 美化后台管理界面
 
-```bash 
+```bash
 # 安装
 pipenv install django-simpleui
 
