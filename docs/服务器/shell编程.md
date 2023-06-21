@@ -1,4 +1,4 @@
-# shell 编程入门
+# shell 编程基础
 
 文件头指明执行程序 #!/bin/bash  #!/usr/bin/python #!/usr/bin/node
 

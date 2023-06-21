@@ -11,10 +11,10 @@ export default [
     {
         collapsible: true,
         text: "服务器",
-        link: "/服务器/linux 命令.md",
+        link: "/服务器/linux 基础.md",
         prefix: "/服务器/",
         children: [
-            "linux 命令.md",
+            "linux 基础.md",
             "linux 实践.md",
             "shell编程.md",
             "vim 使用.md",

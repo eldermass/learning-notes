@@ -9,7 +9,7 @@ export default [
         children: [
             { text: 'Github', link: 'https://github.com' },
             { text: '掘金', link: 'https://juejin.cn/' },
-            { text: '前端部署', link: 'https://q.shanyue.tech/deploy/'},
+            { text: '前端相关', link: 'https://q.shanyue.tech/deploy/'},
             { text: 'MDN', link: 'https://developer.mozilla.org/zh-CN/docs/Web'},
             { text: 'learnku', link: 'https://learnku.com/'}
         ],

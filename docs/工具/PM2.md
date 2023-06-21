@@ -1,4 +1,4 @@
-# PM2
+# PM2部署应用
 
 ## 基础使用
 
@@ -88,3 +88,37 @@ docker exec -it <container-id> pm2 show
 # 0sec downtime reload all applications
 docker exec -it <container-id> pm2 reload all
 ```
+
+3. 其实不用这么麻烦
+   在 node 镜像启动的容器里，安装就行
+
+::: code-tabs#shell
+@tab:active 安装
+
+```bash
+npm install pm2 -g
+```
+
+@tab pm2.json
+
+```js
+{
+  "name": "project-name",
+  "script": "server.js",
+  "instances": "2",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "env_production" : {
+    "NODE_ENV": "production"
+  }
+}
+```
+
+@tab 启动
+
+```DOCKERFILE
+CMD [ "pm2-runtime", "start", "pm2.json" ]
+```
+
+:::

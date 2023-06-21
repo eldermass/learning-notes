@@ -1,4 +1,4 @@
-# Linux 实践
+# Linux 操作实践
 
 ## open-ssh 使用
 
