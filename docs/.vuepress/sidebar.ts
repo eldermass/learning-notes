@@ -6,7 +6,7 @@ export default [
         text: "工具",
         link: "/工具/Git常用命令.md",
         prefix: "/工具/",
-        children: ["Git常用命令.md", "Nginx 配置.md", "Nginx 模块.md", "Docker 命令.md", "npx用途.md", "PM2.md"],
+        children: ["Git常用命令.md", "Nginx 配置.md", "Nginx 模块.md", "Docker 命令.md", "npx用途.md", "PM2.md", "k8s 入门.md"],
     },
     {
         collapsible: true,
