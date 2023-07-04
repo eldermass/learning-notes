@@ -233,7 +233,8 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    # 处理关联关系时，注意处理 related_name
+    question = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
@@ -259,7 +260,7 @@ admin.site.register(Choice)
 
 ### 3. 定义序列化器
 
-定义序列化器 serializers.py, 序列化器是 Django Rest Framework 提供的功能，能够非常方便地将 Django 数据模型序列化成相应的 JSON 数据格式。
+定义序列化器 polls/serializers.py, 序列化器是 Django Rest Framework 提供的功能，能够非常方便地将 Django 数据模型序列化成相应的 JSON 数据格式。
 
 ```python
 from rest_framework import serializers
@@ -267,9 +268,17 @@ from .models import Question
 
 
 class PollSerializer(serializers.ModelSerializer):
+    # 在 api 视图中使用关联关系，PrimaryKeyRelatedField 只会返回关联对象的主键
+    articles = serializers.PrimaryKeyRelatedField(many=True, queryset=Article.objects.all())
+    # 但是如果直接传其他的序列化器，就会返回序列化后的数据
+    answer = AnswerSerializer(many=True)
+    # 处理关联关系时，还应注意要在model定义时，设置related_name
+
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'pub_data']
+        # fields = ['id', 'question_text', 'pub_data', 'articles']
+        fields = '__all__'
+        depth = 1 # 找查外键的深度，articles 就会加入到返回中
 ```
 
 ### 4. 创建视图
@@ -348,9 +357,22 @@ class PollViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 ```
 
-## 四、部署
+在 mysite/urls.py 中，添加权限
 
-可使用 heroku 免费部署
+```python
+urlpatterns = [
+    path('api-auth/', include('rest_framework.urls')),
+    ...
+]
+```
+
+### 10. 生成依赖文件
+
+```bash
+pip freeze > requirements.txt
+```
+
+## 四、部署
 
 ### 使用 wsgi 部署
 
