@@ -1,10 +1,10 @@
-# Django 入门
+# Django 基础
 
 [官方文档](https://docs.djangoproject.com/zh-hans/4.1/intro/tutorial01/)  
 [快速体验](https://juejin.cn/post/6844904025888915470)  
 [快速体验 api](https://juejin.cn/post/6844904063687983112)
 
-## 初始化
+## 一、初始化
 
 1. 新建目录
 
@@ -20,25 +20,25 @@ pip install pipenv
 pipenv shell
 ```
 
+这时会生成一个 Pipfile 文件，记录了虚拟环境的状态，类似于 package.json
+
 3. 安装 django
 
 ```bash
 # 虚拟环境下安装时换源，修改 Pipfile 文件中的 [[source]] 为
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
-# 临时使用清华源安装
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple django
-# 永久使用清华源
-pip install pip -U # 升级
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-
-# 使用 pipenv 安装
+# 在虚拟环境中安装
 pipenv install django
 # 安装 DFR 和 CORS，用于 api
 pipenv install django-rest-framework django-cors-headers
-```
 
-这时会生成一个 Pipfile 文件，记录了项目的依赖包，类似于 package.json
+# 原来的安装方式
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple django
+# 配置全局清华源
+pip install pip -U # 升级 pip
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
 4. 使用脚手架创建项目
 
@@ -75,15 +75,53 @@ python manage.py createsuperuser
 python manage.py runserver ((0.0.0.0):(port))
 ```
 
-## 全局配置
+## 二、全局配置
+
+### (一). 基础配置
 
 1. 在 INSTALLED_APPS 中添加应用 rest_framework、corsheaders 和 polls， `polls` 是刚创建的子应用
+
+```python
+INSTALLED_APPS = [
+    'rest_framework',
+    'corsheaders',
+    'polls',
+    ...
+]
+```
+
 2. 在 MIDDLEWARE 中添加 corsheaders.middleware.CorsMiddleware，注册跨域请求中间件，放在最前面
+
+```python
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    ...
+]
+```
+
 3. 设置 CORS_ORIGIN_WHITELIST，添加跨域请求白名单
+
+```python
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8080',
+    'http://localhost:8081',
+]
+```
+
 4. 设置 LANGUAGE_CODE 为 zh-hans，设置为中文
+
+```python
+LANGUAGE_CODE = 'zh-hans'
+```
+
 5. 设置 MEDIA_URL 和 MEDIA_ROOT，资源文件的访问
 
-### 为 django 配置 mysql
+```python
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+```
+
+### (二). 修改数据库配置
 
 ```bash
 # 安装驱动
@@ -91,20 +129,91 @@ pipenv install mysqlclient
 
 # 在 mysite/settings.py 中，修改数据库配置
 DATABASES = {
+        # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'cool_admin',
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    #     'HOST': 'hostip',
+    #     'PORT': '3386'
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cool_admin', # 数据库名
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '10.10.2.201',
-        'PORT': '3386'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'default',
+        'USER': 'default',
+        'PASSWORD': 'secret',
+        'HOST': 'hostip',
+        'PORT': '5432',
     }
 }
 ```
 
-## 实现一个 polls 应用
+### (三). 使用 simpleui 美化界面
 
-1. 在 polls/models.py 中，创建模型
+```bash
+# 安装
+pipenv install django-simpleui
+
+# 在 mysite/settings.py 中，INSTALLED_APPS 中添加 'simpleui'
+INSTALLED_APPS = [
+    'simpleui',
+    ...
+]
+
+# 在 setting 中添加主题色
+SIMPLEUI_DEFAULT_THEME = 'green'
+
+# 设置 logo
+SIMPLEUI_LOGO = 'https://avatars.githubusercontent.com/u/28778856?s=200&v=4'
+
+# 关闭广告和分析
+SIMPLEUI_HOME_INFO = False
+SIMPLEUI_ANALYSIS = False
+
+
+# 根据教程处理细节
+https://zhuanlan.zhihu.com/p/372185998
+```
+
+### (四). 使用 Django Filter 过滤
+
+### (五). 使用 Django Debug Toolbar 调试
+
+```bash
+# 安装
+pipenv install django-debug-toolbar
+
+# 在 settings.py 中，INSTALLED_APPS 中添加 'debug_toolbar'
+INSTALLED_APPS = [
+    'debug_toolbar',
+    ...
+]
+# 在 settings.py 中，MIDDLEWARE 中添加 'debug_toolbar.middleware.DebugToolbarMiddleware'
+MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ...
+]
+# 在 settings.py 中，添加配置
+DEBUG = True
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]
+
+# 在 mysite/urls.py 中，添加配置
+urlpatterns = [
+    ...
+    path('__debug__/', include('debug_toolbar.urls')),
+]
+```
+
+## 三、实现一个 polls 应用
+
+如果不使用 rest_framework，只需要 1、2、7 步即可
+
+### 1. 创建模型
+
+在 polls/models.py 中，创建模型
 
 ```python
 from django.db import models
@@ -136,7 +245,9 @@ class Choice(models.Model):
         return self.choice_text
 ```
 
-2. 在 polls/admin.py 中，注册模型
+### 2. 注册模型
+
+在 polls/admin.py 中，注册模型
 
 ```python
 from django.contrib import admin
@@ -146,7 +257,9 @@ admin.site.register(Question)
 admin.site.register(Choice)
 ```
 
-3. 定义序列化器 serializers.py, 序列化器是 Django Rest Framework 提供的功能，能够非常方便地将 Django 数据模型序列化成相应的 JSON 数据格式。
+### 3. 定义序列化器
+
+定义序列化器 serializers.py, 序列化器是 Django Rest Framework 提供的功能，能够非常方便地将 Django 数据模型序列化成相应的 JSON 数据格式。
 
 ```python
 from rest_framework import serializers
@@ -159,7 +272,9 @@ class PollSerializer(serializers.ModelSerializer):
         fields = ['id', 'question_text', 'pub_data']
 ```
 
-4. 在 polls/views.py 中，创建视图,使用 Django Rest Framework 提供的模型视图集，实现了增删改查的功能
+### 4. 创建视图
+
+在 polls/views.py 中，创建视图,使用 Django Rest Framework 提供的模型视图集，实现了增删改查的功能
 
 ```python
 from rest_framework import viewsets
@@ -173,7 +288,9 @@ class PollViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all().order_by('pub_data')
 ```
 
-5. 在 polls/urls.py 中，用 DefaultRouter 自动创建路由
+### 5. 创建路由
+
+在 polls/urls.py 中，用 DefaultRouter 自动创建路由
 
 ```python
 from django.urls import path, include
@@ -188,6 +305,8 @@ urlpatterns = [
 ]
 ```
 
+### 6. 注册路由
+
 6. 在 mysite/urls.py 中，注册应用的路由
 
 ```python
@@ -200,7 +319,9 @@ urlpatterns = [
 ]
 ```
 
-7. 创建并迁移数据库
+### 7. 创建并迁移数据库
+
+创建并迁移数据库
 
 ```bash
 # python manage.py makemigrations 全部应用/指定应用
@@ -208,9 +329,12 @@ python manage.py makemigrations polls
 python manage.py migrate
 ```
 
-8. 启动项目，访问 <http://localhost:8000/api/polls/> 或 <http://localhost:8000/admin/polls/> 即可看到数据
+### 8. 启动项目
 
-9. 添加权限
+`/api/polls/` 查看 restful api 的页面  
+`/admin/polls/` 查看后台管理页面
+
+### 9. 添加权限
 
 在 polls/views.py 中，添加权限
 
@@ -224,57 +348,7 @@ class PollViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 ```
 
-10. 美化后台管理界面
-
-```bash
-# 安装
-pipenv install django-simpleui
-
-# 在 mysite/settings.py 中，INSTALLED_APPS 中添加 'simpleui'
-INSTALLED_APPS = [
-    'simpleui',
-    ...
-]
-
-# 在 setting 中添加主题色
-SIMPLEUI_DEFAULT_THEME = 'green'
-
-# 根据教程处理细节
-https://zhuanlan.zhihu.com/p/372185998
-```
-
-11. 安装 django-filter，用于过滤
-
-12. 安装 debug-toolbar，用于调试
-
-```PYTHON
-pipenv install django-debug-toolbar
-
-# 在 settings.py 中，INSTALLED_APPS 中添加 'debug_toolbar'
-INSTALLED_APPS = [
-    'debug_toolbar',
-    ...
-]
-# 在 settings.py 中，MIDDLEWARE 中添加 'debug_toolbar.middleware.DebugToolbarMiddleware'
-MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    ...
-]
-# 在 settings.py 中，添加配置
-DEBUG = True
-INTERNAL_IPS = [
-    '127.0.0.1',
-    'localhost',
-]
-
-# 在 mysite/urls.py 中，添加配置
-urlpatterns = [
-    ...
-    path('__debug__/', include('debug_toolbar.urls')),
-]
-```
-
-## 部署
+## 四、部署
 
 可使用 heroku 免费部署
 
@@ -378,9 +452,9 @@ web: daphne mysite.asgi:application
 }
 ```
 
-## 数据库及迁移
+## 五、数据库及迁移
 
-### 数据库迁移命令
+### 1. 数据库迁移命令
 
 ```bash
 # 创建迁移文件
@@ -396,3 +470,11 @@ python manage.py migrate polls 0001
 # 执行迁移
 python manage.py migrate polls
 ```
+
+### 2. 模型关联关系
+
+[文档](https://docs.djangoproject.com/zh-hans/4.2/topics/db/examples/)
+
+一对一 用 OneToOneField  
+一对多 用 ForeignKey  
+多对多 用 ManyToManyField
