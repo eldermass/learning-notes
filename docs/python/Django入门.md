@@ -500,3 +500,85 @@ python manage.py migrate polls
 一对一 用 OneToOneField  
 一对多 用 ForeignKey  
 多对多 用 ManyToManyField
+
+## 五、DRF 关于数据处理
+
+### (一). 序列化器
+
+#### 1. 重写增删查改方法
+
+```python
+from rest_framework import serializers
+from .models import Question
+
+
+class PollSerializer(serializers.ModelSerializer):
+    # 在 api 视图中使用关联关系，PrimaryKeyRelatedField 只会返回关联对象的主键
+    articles = serializers.PrimaryKeyRelatedField(many=True, queryset=Article.objects.all())
+    # 但是如果直接传其他的序列化器，就会返回序列化后的数据
+    answer = AnswerSerializer(many=True)
+    # 处理关联关系时，还应注意要在model定义时，设置related_name
+
+    class Meta:
+        model = Question
+        # fields = ['id', 'question_text', 'pub_data', 'articles']
+        fields = '__all__'
+        depth = 1 # 找查外键的深度，articles 就会加入到返回中
+
+    # 重写 create 方法，重写创建逻辑
+    def create(self, validated_data):
+        articles_data = validated_data.pop('articles')
+        question = Question.objects.create(**validated_data)
+        for article_data in articles_data:
+            Article.objects.create(question=question, **article_data)
+        return question
+
+    # 重写 update 方法，重写更新逻辑
+    def update(self, instance, validated_data):
+        articles_data = validated_data.pop('articles')
+        articles = (instance.articles).all()
+        articles = list(articles)
+        instance.question_text = validated_data.get('question_text', instance.question_text)
+        instance.pub_data = validated_data.get('pub_data', instance.pub_data)
+        instance.save()
+        for article_data in articles_data:
+            article = articles.pop(0)
+            article.article_text = article_data.get('article_text', article.article_text)
+            article.save()
+        return instance
+
+    # 重写 to_representation 方法，修改返回的数据
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['articles'] = ArticleSerializer(instance.articles.all(), many=True).data
+        res['current_url'] = self.context['request'].build_absolute_uri()
+        return ret
+
+    # 重写 to_internal_value 方法，用于处理关联关系
+    def to_internal_value(self, data):
+        articles_data = data.pop('articles')
+        validated_data = super().to_internal_value(data)
+        validated_data['articles'] = articles_data
+        return validated_data
+```
+
+#### 2. 使用 SerializerMethodField 添加额外的数据
+
+```python
+class ModalInfoSerializer(serializers.ModelSerializer):
+    # 添加的数据
+    external_data = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ModalInfo
+        fields = '__all__'
+
+    # 请求外部的数据 external_data 为字段名， obj 是上次返回的数据
+    def get_external_data(self, obj):
+        try:
+            # test_url = 'http://10.10.2.201:8336/api/menu/list'
+            response = requests.get(obj.data_url)
+            return response.json()
+        except Exception as e:
+            return {'code': 500, 'msg': '获取数据失败', 'data': e.__str__()}
+```
