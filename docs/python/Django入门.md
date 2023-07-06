@@ -582,3 +582,30 @@ class ModalInfoSerializer(serializers.ModelSerializer):
         except Exception as e:
             return {'code': 500, 'msg': '获取数据失败', 'data': e.__str__()}
 ```
+
+### (二). 视图
+
+#### 1. 添加额外的接口
+
+```python
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+class MarkInfoViewSet(viewsets.ModelViewSet):
+    queryset = MarkInfo.objects.all()
+    serializer_class = MarkInfoSerializer
+
+    # 添加额外的接口  /hello_world
+    @action(detail=False, methods=['get'])
+    def by_workshop(self, request):
+        workshop_id = request.query_params.get('workshop_id')
+        if not workshop_id:
+            return Response({'message': '请传入workshop_id'})
+
+        # return Response(info_list) # 如果处理可以返回数据
+        # queryset 转 dict
+        markinfos = MarkInfo.objects.filter(workshop=workshop_id)
+        info_list = [model_to_dict(info) for info in markinfos]
+        return Response(dict_key_to_camel(info_list))
+```
