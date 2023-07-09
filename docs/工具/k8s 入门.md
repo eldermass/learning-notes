@@ -83,8 +83,36 @@ crictl ps
 # 将pod端口映射到主机端口
 kubectl port-forward <pod-name> <host-port>:<pod-port>
 
+# 删除指定命名空间下的所有东西
+kubectl delete all --all -n <namespace>
+
 # 停止 k3s，重置容器、网络、iptables
 /usr/local/bin/k3s-killall.sh
+```
+
+### (三)、离线导入导出镜像
+
+#### 1. docker 中
+
+```bash
+# 导出镜像
+docker save -o <path for generated tar file> <image name>
+docker save image_name > image_name.tar # 保存到当前目录
+# 导入镜像
+docker load -i <path to image tar file>
+```
+
+#### 2. k8s 中
+
+因为底层改为了 containerd，所以不能直接使用 docker 命令，需要使用 crictl 命令来导入导出镜像
+
+```bash
+# 导出镜像
+crictl -n k8s.io images export <file.tar> docker.io/library/<image name>:<tag> --platform linux/amd64
+
+# 导入镜像, 镜像都在k8s.io命名空间下
+crictl -n k8s.io images import <image name> --platform linux/amd64
+
 ```
 
 ## 二、Pod（容器集）
@@ -304,7 +332,9 @@ kubernetes 使用 yaml 文件来描述 Kubernetes 对象。
 @tab:active 使用 pod.yaml 创建 pod
 
 ```bash
-# 创建
+# 导出
+kubectl get all --all-namespaces -o yaml > all.yaml
+# 导入
 kubectl apply -f pod.yaml
 kubectl apply -f https://k8s.io/examples/pods/simple-pod.yaml
 
@@ -382,4 +412,162 @@ kubectl proxy
 # 接下来，您可以在浏览器中访问
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 # 来访问Kubernetes Dashboard。
+```
+
+## 八、 卷(Volume)
+
+卷是独立于容器之外的一块存储区域，通过挂载(Mount)的方式供 Pod 中的容器使用。
+使用场景
+
+-   卷可以在多个容器之间共享数据。
+-   卷可以将容器数据存储在外部存储或云存储上。
+-   卷更容易备份或迁移。
+
+### 1. 零时卷(EBphemeral Volume)
+
+-   与 Pod 一起创建和删除，生命周期与 Pod 相同
+-   emptyDir - 初始内容为空的本地临时目录
+-   configMap - 为 Pod 注入配置文件
+-   secret - 为 Pod 注入加密数据
+
+### 2. 持久卷(Persistent Volume)
+
+删除 Pod 后，持久卷不会被删除
+
+1 **本地存储**
+
+-   hostPath - 节点主机上的目录或文件
+    (仅供单节点测试使用；多节点集群请用 local 卷代替)
+-   local - 节点上挂载的本地存储设备(不支持动态创建卷)
+
+2 **网络存储**
+
+-   NFS - 网络文件系统 (NFS)
+
+3 **分布式存储**
+
+-   Ceph(cephfs 文件存储、rbd 块存储)
+
+### 3. 投射卷(Projected Volumes)
+
+-   projected 卷可以将多个卷映射到同一个目录上
+
+## 九、存储类(Storage Class)
+
+## 十、创建有状态应用
+
+### 1. 创建 mysql 应用
+
+1 .配置环境变量  
+ 传递给容器的环境变量，可以在容器内部使用，也可以在容器启动时使用
+
+2. 挂载数据卷  
+   `hostPath` 卷将主机节点上的文件或目录挂载到 Pod 中。  
+   hostPath 仅用于在单节点集群上进行开发和测试，不适用于多节点集群；  
+   例如，当 Pod 被重新创建时，可能会被调度到与原先不同的节点上，导致新的 Pod 没有数据。
+   在多节点集群使用本地存储，可以使用 `local` 卷。
+
+hostPath 的 type 值:
+
+-   DirectoryOrCreate：如果路径不存在，则创建一个目录
+-   Directory：如果路径不存在，则挂载失败
+-   FileOrCreate：如果文件不存在，则创建一个文件
+-   File：如果文件不存在，则挂载失败
+-   Socket：如果套接字文件不存在，则挂载失败
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+    name: mysql-pod
+spec:
+    containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+              - name: MYSQL_ROOT_PASSWORD
+                value: "123456"
+          ports:
+              - containerPort: 3306
+          volumeMounts:
+              - mountPath: /var/lib/mysql #容器中的目录
+                name: data-volume
+    volumes:
+        - name: data-volume
+          hostPath:
+              # 宿主机上目录位置
+              path: /data/mysql/data
+              type: DirectoryOrCreate
+```
+
+### 2. ConfigMap 与 Secret
+
+在 Kubernetes 集群中，容器可能被调度到任意节点，配置文件需要能在集群任意节点上访问、分发和更新。
+
+```bash
+# 更新配置文件，cm 是configmap的缩写，myapp-config 是配置名
+kubectl edit cm myapp-config
+
+# 查看配置文件
+kubectl describe cm myapp-config
+```
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+    name: mysql-password
+type: Opaque
+data:
+    PASSWORD: MTIzNDU2Cg== # base64 编码 123456
+---
+apiVersion: v1
+kind: Pod
+metadata:
+    name: mysql-pod
+spec:
+    containers:
+        - name: mysql
+          image: mysql:5.7
+          env:
+              - name: MYSQL_ROOT_PASSWORD
+                # 读取secret中的值
+                valueFrom:
+                    secretKeyRef:
+                        name: mysql-password
+                        key: PASSWORD
+                        optional: false # 此值为默认值；表示secret已经存在了
+          volumeMounts:
+              - mountPath: /var/lib/mysql
+                name: data-volume
+              - mountPath: /etc/mysql/conf.d
+                name: conf-volume # 挂载卷的名字
+                readOnly: true
+    volumes:
+        - name: conf-volume
+          configMap:
+              name: mysql-config # 使用configmap的名字来挂载到集群
+        - name: data-volume
+          hostPath:
+              # directory location on host
+              path: /home/mysql/data
+              # this field is optional
+              type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: mysql-config
+data:
+    mysql.cnf: |
+        [mysqld]
+        character-set-server=utf8mb4
+        collation-server=utf8mb4_general_ci
+        init-connect='SET NAMES utf8mb4'
+
+        [client]
+        default-character-set=utf8mb4
+
+        [mysql]
+        default-character-set=utf8mb4
 ```
