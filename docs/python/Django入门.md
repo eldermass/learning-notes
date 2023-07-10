@@ -72,6 +72,7 @@ python manage.py createsuperuser
 6. 启动项目
 
 ```bash
+# 默认127.0.0.1 是一个回环地址，不能通过外部访问，只能自己访问，如果想在docker外访问就要加上0.0.0.0
 python manage.py runserver ((0.0.0.0):(port))
 ```
 
@@ -369,7 +370,7 @@ urlpatterns = [
 ### 10. 生成依赖文件
 
 ```bash
-pip freeze > requirements.txt
+pipenv run pip freeze > requirements.txt
 ```
 
 ## 四、部署
