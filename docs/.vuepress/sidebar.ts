@@ -38,6 +38,13 @@ export default [
     },
     {
         collapsible: true,
+        text: "前端",
+        link: "/前端/nuxt3使用.md",
+        prefix: "/前端/",
+        children: ["nuxt3使用.md"]
+    },
+    {
+        collapsible: true,
         text: "计算机基础",
         link: "/计算机基础/位运算.md",
         prefix: "/计算机基础/",
