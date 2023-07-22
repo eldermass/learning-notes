@@ -114,7 +114,7 @@ for index, value := range scores {
 #### 1. 切片申明
 
 ```go
-nums := [4]int{1, 2, 3, 4}
+nums := [4]int{1, 2, 3, 4} // 数组
 
 // 从数组中获取切片
 all_nums = nums[:]
@@ -192,128 +192,241 @@ for key, value := range lookup {
 
 ### 8、函数
 
-```go
-func add(a int, b int) int {}
+#### 1. 一般函数
 
-func user(name string) (string, int) {}
+```go
+// 申明 func 函数名(参数) 返回值 {}
+func add(a int, arr ...int) int {} // ...接受不定参数
+// 调用
+add(1, [2, 3, 4]...) // ...展开数组
+
+func user(name string) (string, int) {
+    // 函数内无法声明函数，但是可以使用匿名函数
+    a := func(data string) {
+        fmt.Printf("hello %s", data)
+    }
+    return name, 23
+}
+// 自执行函数
+(func() {
+    fmt.Println("hello world")
+})()
+
+// 闭包函数
+func adder() func(int) int {
+    sum := 0
+    return func(x int) int {
+        sum += x
+        return sum
+    }
+}
+
+// 延迟执行，defer 会在函数结束时执行
+defer fmt.Println("hello world")
 ```
 
+#### 2. go 函数
+
 ### 9、指针
+
+& 取地址，\* 取值
+
+```go
+a := 1
+fmt.Println(a) // 1
+var p *int
+p = &a // 取地址
+*p = 2 // 取值
+// a == *p, &a == p
+fmt.Println(a, p, *p) // 2 0xc000014048 2
+
+
+// 函数中传递指针
+func addAge(age *int) {
+ *age += 500
+}
+
+dogAge := 1
+addAge(&dogAge)
+```
 
 ### 10、结构体
 
 go 不是面向对象的语言，结构体是面向对象的替代
 
-1. 申明和初始化
+#### 1、申明和使用
 
 ```go
 // 申明结构体
 type Dog struct {
- name string
- age int
+    name string
+    age int
 }
 
 func main() {
- // 初始化
- dog := Dog{ name: "Mike" }
- dog.age = 2000
- // 通过指针传递引用
- addAge(&dog)
-
- fmt.Println(dog.age)
+    // 初始化
+    // dog := new(Dog) // 空实例化
+    // dog := &Dog{} // 同上
+    dog := Dog{ "Mike", 23 }
+    // 通过指针传递引用
+    addAge(&dog)
+    fmt.Println(dog.age) // 28
 }
 
 func addAge(d *Dog) {
- d.age += 500
+    // 通过地址 或者 通过值都是能改变复杂数据类型的值
+    d.age += 5
+    (*d).age += 5
 }
 ```
 
-2. 结构体上的函数
+#### 2、结构体上的函数、方法
 
 ```go
 type Dog struct {
- name string
- age int
+    name string
+    age int
 }
 
+// 在结构体上定义方法
 func (d *Dog) addAge() {
- d.age += 500
+    d.age += 5
 }
 
-dog := Dog{ name: "Mike" }
-dog.age = 2000
-dog.addAge()
+dog := Dog{ name: "Mike", age: 23 }
+dog.addAge() // dog.age == 28
 ```
 
-3. 构造器
-   结构体没有构造器。但是，你可以创建一个返回所期望类型的实例的函数（类似于工厂）
+#### 3、组合、混合
 
 ```go
-dog := newDog("张三", 23)
-dog.age = 2000
-dog.addAge(500)
-
-func newDog(name string, age int) *Dog {
- return &Dog{
-  name,
-  age,
- }
-}
-```
-
-4. new 函数
-
-```go
-dog := new(Dog)
-// same as
-dog := &Dog{}
-```
-
-5. 组合、混合
-
-```go
-func main()  {
- dog := &Dog{
-  Animal: &Animal{ Name: "Mike" },
-  age: 56,
- }
- fmt.Println(dog)
- fmt.Println(dog.getName())
-}
-
-
 type Animal struct {
- Name string
+    legs int
+    Dog // 匿名结构体
+    tiger Tiger // 带名结构体
 }
 
-func (a *Animal) getName() string {
- return a.Name
-}
+animal := Animal{ legs: 4, Dog: Dog{ "Mike", 23 } }
 
-type Dog struct {
- *Animal
- age int
-}
-```
-
-6. 指针、值
-
-7. 接口
-
-```go
-type Logger interface {
- Log(msg string)
-}
-
-type ConsoleLogger struct {}
-func (i ConsoleLogger) Log(msg string) {
- fmt.Println(msg)
-}
+// 匿名结构体有2中访问方式，有相同字段时，优先使用匿名结构体的字段
+animal.name // Mike
+animal.Dog.name // Mike
 ```
 
 ### 11、接口
 
-### 12、管道
+一类东西的规范，集合
+
+```go
+type Animal interface {
+    Run(long string)
+}
+
+type Dog struct {
+    name string
+    age string
+}
+
+func (d Dog) Run(l string) {
+    fmt.Print(d.name + " 跑了 " + l + " 米")
+}
+
+// 接口作为参数
+func beginRun(a Animal) {
+    a.Run("12")
+}
+
+func main () {
+    dog := Dog{"Mike", "12"}
+
+    beginRun(dog)
+}
+```
+
+### 12、管道(协成、异步)
+
+#### 1. goroutine
+
+在调用前加上 go 关键字，就能创建一个协成
+
+```go
+// 申明协成
+func main() {
+    go Run() // 创建一个协成，不会阻塞主线程
+}
+
+func Run() {
+    fmt.Println("hello world")
+}
+```
+
+#### 2. 协成管理器
+
+```go
+func main() {
+    var wg sync.WaitGroup
+    wg.Add(1) // 添加一个协成
+    go Run(&wg) // 创建一个协成，不会阻塞主线程
+    wg.Wait() // 等待所有协成执行完毕
+    fmt.Println("协成完了，我再执行")
+}
+
+```
+
+#### 3. channel
+
+goroutine 的通信工具, 箭头指入为写入，指出为读取
+
+```go
+// 申明管道
+ch := make(chan int)
+ch2 := make(chan int, 2) // 带缓冲的管道
+
+// 只读、只写管道
+var readCh <-chan int = ch
+var writeCh chan<- int = ch
+
+// 写入数据
+ch <- 1
+// 读取数据
+num := <- ch
+
+// 关闭，关闭后不可写入，但可读取
+// for range 遍历前必须关闭管道
+close(ch)
+
+func main() {
+    // 不带缓冲的管道，再接收时才会去读取数据
+    // 带缓冲的管道，会先存满缓冲区时才写入管道
+    ch := make(chan int)
+
+    go func() {
+        for i:=0; i<10; i++ {
+            ch <- i
+        }
+    }()
+
+    for i:=0; i<10; i++ {
+        num := <- ch
+        fmt.Println(num)
+    }
+}
+
+// select 选择器，在没有值时，不会死锁
+func main() {
+    ch1 := make(chan int)
+    ch2 := make(chan int)
+
+    select {
+        case num := <- ch1:
+            fmt.Println(num)
+        case num := <- ch2:
+            fmt.Println(num)
+        default:
+            fmt.Println("没有数据")
+    }
+}
+```
 
 ## 三、流程控制
 
