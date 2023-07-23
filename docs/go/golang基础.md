@@ -428,6 +428,64 @@ func main() {
 }
 ```
 
+### 13、断言
+
+```go
+// 断言，判断类型
+var a interface{}
+
+a.(int) // 断言为 int 类型
+
+func main() {
+    var a interface{}
+    a = 1
+
+    // a.(type) 判断 a 的类型
+    switch a.(type) {
+        case int:
+            fmt.Println("int")
+        case string:
+            fmt.Println("string")
+        default:
+            fmt.Println("default")
+    }
+}
+```
+
+### 14、 反射
+
+```go
+type Dog struct {
+    Name string
+    age int
+}
+
+// 反射，获取类型
+a := Dog{"Mike", 23}
+
+// 获取类型
+t := reflect.TypeOf(a) // []int
+// 获取值
+v := reflect.ValueOf(a) // [1, 2, 3]
+
+for i := 0; i < t.NumField(); i++ {
+    // 获取字段名
+    fmt.Println(v.Field(i))
+    // 获取字段值
+    // fmt.Println(v.Field(i).Interface())
+}
+
+// 其他操作
+v.FieldByName("Name")
+v.FieldByIndex([]int{0}).SetString("Mike3") // 成员 Name 必须以大写字母开头才能访问
+m := v.MethodByName("Run") // 调用函数
+m.Call([]reflect.Value{reflect.ValueOf("12")})
+
+t.kind() // 获取类型
+t.kind() == reflect.Struct // 判断是否为结构体
+t.kind() == reflect.String // 判断是否为整型
+```
+
 ## 三、流程控制
 
 ### 1、递增、递减
@@ -508,4 +566,173 @@ breakTag:
     ...
 ```
 
-## 四、其他
+## 四、并发编程
+
+### 1、锁
+
+#### 1. 互斥锁
+
+```go
+func main() {
+    // 申明互斥锁，解锁之前，其他协成无法访问
+    l := &sync.Mutex{}
+
+    go lockFun(l)
+    go lockFun(l)
+}
+
+func lockFun(lock *sync.Mutex) {
+    lock.Lock()
+    ...
+    time.Sleep(1 * time.Second)
+    defer lock.Unlock()
+}
+```
+
+#### 2. 读写锁
+
+```go
+func main() {
+    // 读写锁，写锁时不可读写。读锁时可以读，但不能写
+    l := &sync.RWMutex{}
+
+    go lockFun(l)
+    go lockFun(l)
+    go readLockFun(l)
+    go readLockFun(l)
+}
+func lockFun(lock *sync.RWMutex) {
+    // 写锁在写的时候，其他协成不能读写
+    lock.Lock()
+    ...
+    time.Sleep(1 * time.Second)
+    defer lock.Unlock()
+}
+
+func readLockFun(lock *sync.RWMutex) {
+    // 读锁在读的时候，其他协成也可以读，但不能写
+    lock.RLock()
+    ...
+    time.Sleep(1 * time.Second)
+    defer lock.RUnlock()
+}
+```
+
+#### 3. once 锁
+
+```go
+o := &sync.Once{}
+
+for i:=0; i<10; i++ {
+    go func() {
+        o.Do(func() {
+            fmt.Println("只执行一次")
+        })
+    }()
+}
+```
+
+#### 4. waitGroup
+
+```go
+wg := &sync.WaitGroup{}
+
+wg.Add(2) // 添加2个协成
+
+go func() {
+    time.Sleep(2 * time.Second)
+    defer wg.Done() // 协成执行完毕，减少一个协成
+    fmt.Println("执行完毕第一次")
+}()
+
+go func() {
+    time.Sleep(2 * time.Second)
+    defer wg.Done() // 协成执行完毕，减少一个协成
+    fmt.Println("执行完毕第二次")
+}()
+
+wg.Wait() // 等待所有协成执行完毕
+fmt.Println("最后执行完毕")
+```
+
+#### 5. 并发字典
+
+```go
+m := &sync.Map{}
+
+// 同时读写
+go func() {
+    for i:=0; i<100; i++ {
+        m.Store(i, i)
+    }
+}()
+
+go func() {
+    for i:=0; i<100; i++ {
+        fmt.Println(m.Load(i))
+        // m.LoadOrStore(i, i) // 不存在时，存储
+        // m.Delete(i) // 删除
+        // 循环
+        // m.range(func(key, value interface{}) bool {
+        //     fmt.Println(key, value)
+        //     time.Sleep(1 * time.Second)
+        //     return true
+        // })
+    }
+}()
+time.Sleep(1 * time.Second)
+```
+
+#### 6. 并发池
+
+```go
+p := &sync.Pool{}
+
+p.Put(1) // 存储
+p.Put(2) // 存储
+p.Put(3) // 存储
+
+for i:=0; i<5; i++ {
+    func() {
+        time.Sleep(1 * time.Second)
+        // 取出来的值，如果不放回去，就不在池中了
+        fmt.Println(p.Get())
+    }()
+}
+```
+
+#### 7. Cond
+
+```go
+c := sync.NewCond(&sync.Mutex{})
+
+// c.L.Lock()
+// c.Wait() // 等待通知
+// c.L.Unlock()
+// c.Signal() // 通知一个协成
+// c.Broadcast() // 广播
+
+go func() {
+    c.L.Lock()
+    defer c.L.Unlock() // defer 放到最后才执行
+    fmt.Println("协成1等待")
+    c.Wait()
+    fmt.Println("协成1执行")
+}()
+
+go func() {
+    c.L.Lock()
+    defer c.L.Unlock()
+    fmt.Println("协成2等待")
+    c.Wait()
+    fmt.Println("协成2执行")
+}()
+
+time.Sleep(1 * time.Second)
+c.Signal() // 通知一个协成
+time.Sleep(1 * time.Second)
+c.Signal() // 通知一个协成
+time.Sleep(1 * time.Second)
+```
+
+## 五、文件操作
