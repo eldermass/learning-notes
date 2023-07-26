@@ -486,6 +486,27 @@ t.kind() == reflect.Struct // 判断是否为结构体
 t.kind() == reflect.String // 判断是否为整型
 ```
 
+### 15、 泛型
+
+```go
+test[int](2)
+
+func test[T](i T) T {
+    return i
+}
+
+// 切片
+func main() {
+	a := same[string]("a", "a")
+	fmt.Printf("a: %v\n", a)
+}
+
+func same[T float64 | int | string](a, b string) bool {
+	return a == b
+}
+
+```
+
 ## 三、流程控制
 
 ### 1、递增、递减
@@ -736,3 +757,108 @@ time.Sleep(1 * time.Second)
 ```
 
 ## 五、文件操作
+
+### 1、文件读取
+
+```go
+// 读取文件
+func main() {
+    // os.ReadFile("./test.txt") // 一次性读取
+    // 读取文件
+    file, err := os.Open("./test.txt")
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    file.Write([]byte("hello world"))
+
+    for {
+        b := make([]byte, 12)
+        n, err := file.Read(b)
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+        fmt.Println(string(string(b)))
+    }
+    defer file.Close()
+
+    // bufio包，读取文件
+    reader := bufio.NewReader(file)
+    for {
+        str, err := reader.ReadString('\n') // 读取一行
+        if err == io.EOF { // 读取完毕
+            break
+        }
+        fmt.Print(str)
+    }
+}
+```
+
+## 六、网络编程 net
+
+### 1、tcp
+
+```go
+// 申明 tcp 服务端
+func main() {
+    tcpAddr,_ := net.ResolveTCPAddr("tcp", ":8888")
+    net.ListenTCP("tcp", tcpAddr)
+    // 创建 tcp 连接
+    for {
+        conn, err := tcpListener.AcceptTCP()
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+        go handleConn(conn)
+    }
+}
+
+// 申明 tcp 客户端
+func main() {
+    tcpAddr,_ := net.ResolveTCPAddr("tcp", ":8888")
+    conn, err := net.DialTCP("tcp", nil, tcpAddr)
+
+    // 读取命令行输入
+    reader := bufio.NewReader(os.Stdin)
+    bytes,_,_ := reader.ReadLine()
+    // 发送数据
+    conn.Write(bytes)
+}
+```
+
+### 2、http
+
+```go
+func main() {
+    http.HandleFunc('/test', handler)
+    http.ListenAndServe(":8888", nil)
+}
+
+func handler(res http.ResponseWriter, req *http.Request) {
+    res.Write([]byte("hello world"))
+}
+```
+
+### 3、rpc
+
+远程调用
+
+```go
+// 申明 rpc 服务端
+func main() {
+    rpc.RegisterName("HelloService", new(HelloService))
+    listener, _ := net.Listen("tcp", ":1234")
+    for {
+        conn, _ := listener.Accept()
+        go rpc.ServeConn(conn)
+    }
+}
+```
+
+### 4、websocket
+
+```go
+
+```
