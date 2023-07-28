@@ -1,13 +1,15 @@
 # Gin
 
+[Gin 文档](https://learnku.com/docs/gin-gonic/1.7)
 [GORM](https://learnku.com/docs/gorm/v2/index/9728)
+[入门资料](https://www.topgoer.com/gin%E6%A1%86%E6%9E%B6/%E7%AE%80%E4%BB%8B.html)
 
 ## 一、基础配置
 
 ### 1. 设置
 
 ```go
-// 打开mod
+// 打开mod,默认是 auto 会根据当前目录判断是否开启
 go env -w GO111MODULE=on
 
 // 设置七牛云代理
@@ -16,25 +18,29 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ## 二、快速开始
 
-[参考资料](https://www.topgoer.com/gin%E6%A1%86%E6%9E%B6/%E7%AE%80%E4%BB%8B.html)
-
 ### 1. 初始化模块
 
-```go
-// 初始化模块
+```bash
+# 初始化模块
 go mod init <mod_name>
 
-// 拉取框架
+# 整理安装项目依赖
+go mod tidy
+
+# 拉取框架
 go get -u github.com/gin-gonic/gin
 ```
 
 ### 2. 运行 demo
 
-> go run mod_name.go
+> go run mod_name 或在目录中 go run main.go
+
+main.go 文件内容
 
 ```go
 package main
-import "github.com/gin-goinc/gin"
+import "github.com/gin-gonic/gin"
+
 func main() {
     r := gin.Default()
     r.GET("/ping", func(c *gin.Context) {
@@ -51,7 +57,7 @@ func main() {
 ```go
 go install github.com/pilu/fresh@latest
 
-// 运行
+// 在工作目录运行命令
 fresh
 ```
 
