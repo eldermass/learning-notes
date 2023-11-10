@@ -73,7 +73,7 @@ server {
     server_name pythonav.cn;
 
     #优先级1,精确匹配，根路径
-    location =/ {
+    location = / {
         return 400;
     }
 
