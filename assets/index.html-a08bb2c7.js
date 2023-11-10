@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-574ad1a8","path":"/%E8%A7%84%E8%8C%83/","title":"规范","lang":"zh-CN","frontmatter":{"title":"规范","article":false,"feed":false,"sitemap":false},"headers":[],"git":{},"readingTime":{"minutes":0.03,"words":10},"filePathRelative":null}');export{e as data};

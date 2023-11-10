@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-36c3b434","path":"/%E7%AE%97%E6%B3%95/","title":"算法","lang":"zh-CN","frontmatter":{"title":"算法","article":false,"feed":false,"sitemap":false},"headers":[],"git":{},"readingTime":{"minutes":0.03,"words":10},"filePathRelative":null}');export{e as data};

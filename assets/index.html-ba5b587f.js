@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-3703876b","path":"/%E5%B7%A5%E5%85%B7/%E5%85%B6%E4%BB%96%E5%8F%82%E8%80%83/%E7%81%AB%E7%BB%92/","title":"火绒","lang":"zh-CN","frontmatter":{"title":"火绒","article":false,"feed":false,"sitemap":false},"headers":[],"git":{},"readingTime":{"minutes":0.03,"words":10},"filePathRelative":null}');export{e as data};

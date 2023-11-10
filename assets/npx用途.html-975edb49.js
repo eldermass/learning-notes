@@ -1,0 +1,14 @@
+import{_ as a,Y as e,Z as n,a0 as s}from"./framework-6d304b95.js";const i={},l=s(`<h1 id="npx-用途" tabindex="-1"><a class="header-anchor" href="#npx-用途" aria-hidden="true">#</a> npx 用途</h1><ul><li>在项目中直接运行指令，直接运行 node_modules 中的某个指令，不需要输入文件路径</li></ul><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>node-modules/.bin/babel.js <span class="token parameter variable">--version</span>
+npx babel <span class="token parameter variable">--version</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul><li>避免全局安装模块：npx 临时安装一个模块，使用过后删除这个模块(下面的两个模块不需要全局安装)</li></ul><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>npx babel my-react-app
+npx babel@7.0.1 main.js <span class="token parameter variable">-o</span> ./dist/main.js
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul><li>使用不同版本的命令，使用本地或者下载的命令</li></ul><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token comment"># 必须使用本地 http-server（本地没有就报错）</span>
+npx --no-install http-server
+<span class="token comment"># 忽略本地安装的包，直接使用下载的包</span>
+npx --ignore-existing create-react-app my-react-app
+<span class="token comment"># 使用特定版本的包的命令</span>
+npx node@0.12.8 <span class="token parameter variable">-v</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="参数" tabindex="-1"><a class="header-anchor" href="#参数" aria-hidden="true">#</a> 参数</h2><ul><li>-p 下载某个模块后，运行命令（命令必须在下载后才行，类似于通道符）</li></ul><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>npx <span class="token parameter variable">-p</span> node@0.10 <span class="token function">node</span> <span class="token parameter variable">-v</span>
+npx <span class="token parameter variable">-p</span> A <span class="token parameter variable">-p</span> B <span class="token punctuation">[</span>command<span class="token punctuation">]</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul><li>可以执行仓库中的代码，远程代码必须是一个模块，即必须包含 package.json 和入口脚本</li></ul><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>npx github:piuccio/cowsay hello
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div>`,12),d=[l];function r(c,p){return e(),n("div",null,d)}const o=a(i,[["render",r],["__file","npx用途.html.vue"]]);export{o as default};

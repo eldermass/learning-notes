@@ -1,0 +1,1 @@
+import{_ as n,Y as t,Z as a,a1 as e,a2 as _}from"./framework-6d304b95.js";const c={},r=e("h1",{id:"tengine-配置",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#tengine-配置","aria-hidden":"true"},"#"),_(" Tengine 配置")],-1),s=[r];function o(i,d){return t(),a("div",null,s)}const l=n(c,[["render",o],["__file","Tengine 配置.html.vue"]]);export{l as default};

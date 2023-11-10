@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-3c0b3970","path":"/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E5%85%B6%E4%BB%96%E5%8F%82%E8%80%83/","title":"其他参考","lang":"zh-CN","frontmatter":{"title":"其他参考","article":false,"feed":false,"sitemap":false},"headers":[],"git":{},"readingTime":{"minutes":0.03,"words":10},"filePathRelative":null}');export{e as data};

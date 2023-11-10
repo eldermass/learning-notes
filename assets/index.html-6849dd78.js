@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-d5c1c75c","path":"/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/","title":"计算机基础","lang":"zh-CN","frontmatter":{"title":"计算机基础","article":false,"feed":false,"sitemap":false},"headers":[],"git":{},"readingTime":{"minutes":0.03,"words":10},"filePathRelative":null}');export{e as data};
